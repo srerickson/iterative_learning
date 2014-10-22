@@ -1,0 +1,2 @@
+$:.unshift("./")
+require 'environment.rb'
