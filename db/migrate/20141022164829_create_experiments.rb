@@ -4,7 +4,7 @@ class CreateExperiments < ActiveRecord::Migration
       t.string  :name
       t.text    :description
 
-      t.integer :num_conditions, default: 1
+      # t.integer :num_conditions, default: 1
       t.integer :chains_per_condition, default: 1
       t.integer :generations_per_chain, default: 1
       t.integer :tasks_per_generation, default: 1

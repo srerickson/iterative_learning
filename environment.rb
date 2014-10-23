@@ -32,6 +32,9 @@ if ENV['RACK_ENV'] == "development"
 end 
 
 
+require 'lib/il/iterative_learning'
+require 'lib/il/function_learning'
+
 # require_all 'app/uploaders'
 require_all 'app/models'
 # require_all 'app/serializers'

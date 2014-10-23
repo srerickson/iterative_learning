@@ -1,0 +1,31 @@
+test_experiment: 
+  description: This is a test
+
+  conditions: 
+    - start_values: FUNC_POSITIVE
+      target_values: FUNC_POSITIVE
+
+    - start_values: FUNC_NEGATIVE
+      target_values: FUNC_NEGATIVE
+
+    - start_values: FUNC_NONLINEAR
+      target_values: FUNC_NONLINEAR
+
+    - start_values: FUNC_RANDOM
+      target_values: FUNC_RANDOM
+
+  chains_per_condition: 1
+  generations_per_chain: 2
+  tasks_per_generation: 3
+
+  is_mturk: true
+  mturk_title: This is a test
+  mturk_description: etc etc etc
+  mutkr_keywords: iterative learning
+  mturk_award: 0.01
+  mturk_time_to_complete: 60
+  mturk_time_to_expire: 60
+  mturk_qualifications: 60
+
+  percent_test_for_training: 50
+  generation_shared_values: true

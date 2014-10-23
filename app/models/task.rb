@@ -5,9 +5,8 @@ class Task < ActiveRecord::Base
   validates_presence_of :generation
   #validates_associated :generation
 
-
   def doable?
-    generation.prev.complete?
+    generation.active?
   end
 
   def complete?
