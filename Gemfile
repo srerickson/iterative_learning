@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem "grape"
+gem "grape-entity"
 gem 'rack-cors'
 gem 'hashie_rails'
 gem "pg"

@@ -1,12 +1,13 @@
 $:.unshift("./app","./app/api","./app/serializers","./lib")
 
-ENV["IL_SECRET"] ||= "12345"
+ENV["IL_SECRET"] ||= "12345f9ashf8aj4jf84j4jkkof9djnxbxvbfw5261klzlsldkhe73652fgggatq54242tys78d77386354lkjhuyrtsbgcerwrq765897lkkjhpou"
 ENV["RACK_ENV"] ||= "development"
 
 VERSION = '0.1'
 
 require 'rubygems'
 require 'grape'
+require 'grape-entity'
 require 'hashie_rails'
 require 'pg'
 require 'active_record'
@@ -39,4 +40,4 @@ require 'lib/il/function_learning'
 require_all 'app/models'
 # require_all 'app/serializers'
 
-require 'api'
+require 'api/api'

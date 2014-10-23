@@ -13,4 +13,8 @@ class Task < ActiveRecord::Base
     !self.response.nil?
   end
 
+  def jwt_key
+    JWT.encode({task_id: self.id}, ENV['IL_SECRET'])
+  end
+
 end

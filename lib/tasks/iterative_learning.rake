@@ -23,4 +23,10 @@ namespace :iterative_learning do
 
   end
 
+  task :list => :environment do 
+    Experiment.all.each do |e|
+      puts "#{e.name}\t| #{e.jwt_key}"
+    end
+  end
+
 end
