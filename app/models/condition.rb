@@ -6,12 +6,19 @@ class Condition < ActiveRecord::Base
   has_many :chains, dependent: :destroy, inverse_of: :condition
   before_create :build_chains
 
-  protected
+  def prepare 
+    chains.each(&:prepare)
+  end
 
-  def build_chains 
-    if chains.empty? and experiment.chains_per_condition > 0
-      experiment.chains_per_condition.times{ chains.build }
-    end
+  def update_experiment(task)
+    experiment.update_experiment(task)
+  end
+
+  protected 
+
+  def build_chains
+    num_chains = experiment.chains_per_condition
+    num_chains.times{ chains.build } if chains.empty?
   end
 
 end

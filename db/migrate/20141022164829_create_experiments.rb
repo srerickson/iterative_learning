@@ -36,15 +36,18 @@ class CreateExperiments < ActiveRecord::Migration
 
     create_table :generations do |t|
       t.integer :chain_id
+      t.integer :position
       t.json    :start_values, default: []
     end
 
     create_table :tasks do |t|
       t.integer :generation_id
-      t.string  :worker_mturk_id
+      t.string  :mturk_worker_id
+      t.string  :mturk_hit_id
       t.integer :worker_age
       t.string  :worker_gender
-      t.json    :response
+      t.json    :start_values, default: []
+      t.json    :response_values
       t.timestamps
     end
 

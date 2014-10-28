@@ -19,7 +19,7 @@ module IterativeLearning
     end
 
 
-    resource :tasks do 
+    resource :task do 
       params do
         requires :key, type: String, desc: "JWT task key"
       end

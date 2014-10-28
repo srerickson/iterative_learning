@@ -1,38 +1,83 @@
 class Generation < ActiveRecord::Base
 
   belongs_to :chain, inverse_of: :generations  
-  validates_presence_of :chain
+  validates_presence_of :chain, :position
 
   has_many :tasks, dependent: :destroy, inverse_of: :generation
   before_create :build_tasks
 
-  def experiment
-    self.chain.condition.experiment
+
+  def prepare
+    if start_values.empty? 
+      if position == 0
+        self.start_values = IterativeLearning.partition_values chain.condition.start_values
+      else
+        self.start_values = IterativeLearning.repartition_values prev_gen.best_task_response
+      end
+      self.save!
+    end
+    tasks.each(&:prepare)
   end
 
-  def prev
-    i = chain.generations.find_index(self)
-    if i > 0 
-      chain.generations[i-1]
+  def update_experiment(task)
+    next_gen.prepare if self.complete?
+    chain.update_experiment(task)
+  end
+
+
+  # Previous generation in the chain
+  #
+  def prev_gen
+    if self.position > 0
+      chain.generations[self.position-1]
     else
       nil
     end
   end
 
-  def active?
-    prev.nil? || prev.complete?
+
+  # Next generation in the chain
+  #
+  def next_gen
+    if self.position < chain.generations.length-1
+      chain.generations[self.position+1]
+    else
+      nil
+    end
   end
 
-  def complete?
-    tasks.all? {|t| t.complete? }
+
+  # Is this the active generation?
+  #
+  def active?
+    !complete? and (prev_gen.nil? or prev_gen.complete?)
   end
+
+
+  # All the tasks complete?
+  #
+  def complete?
+    tasks.all?(&:complete?)
+  end
+
+
+  # Returns the task reponse that is 
+  # the 'best' among the child tasks
+  def best_task_response
+    if complete? 
+      tasks.first.response_values # FOR TESTING
+    else
+      nil
+    end
+  end
+
 
   protected
 
+
   def build_tasks
-    if tasks.empty? and experiment.tasks_per_generation > 0
-      experiment.tasks_per_generation.times{ tasks.build }
-    end
+    num_tasks = chain.condition.experiment.tasks_per_generation
+    num_tasks.times{ tasks.build } if tasks.empty?
   end
 
 end

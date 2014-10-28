@@ -2,10 +2,12 @@ module IterativeLearning
   module Entities
 
     class Task < Grape::Entity
-      expose :worker_mturk_id
+      expose :mturk_worker_id
+      expose :mturk_hit_id
       expose :worker_age
       expose :worker_gender
-      expose :response
+      expose :start_values, as: :_start_values
+      expose :response_values
       expose :jwt_key, as: :_jwt_key
     end
 
