@@ -15,8 +15,10 @@ namespace :il do
         condition = experiment.conditions.build
         condition.start_values = IterativeLearning.build_condition(cond_config['start_values'], 100)
         condition.target_values = IterativeLearning.build_condition(cond_config['target_values'], 100)
+        condition.name = cond_config['name']
       end
       experiment.update_attributes!( configs )
+      experiment.prepare
     end
 
   end

@@ -13,7 +13,9 @@ class Experiment < ActiveRecord::Base
   end
 
   def jwt_key
-    JWT.encode({experiment_id: self.id}, ENV['IL_SECRET'])
+    JWT.encode({
+      experiment_name: self.name
+    }, ENV['IL_SECRET'])
   end
 
 end

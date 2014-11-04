@@ -26,6 +26,7 @@ class CreateExperiments < ActiveRecord::Migration
 
     create_table :conditions do |t|
       t.integer :experiment_id
+      t.string  :name
       t.json    :start_values, default: []
       t.json    :target_values, default: []
     end

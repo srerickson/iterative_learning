@@ -13,8 +13,8 @@ module IterativeLearning
       end
       get do 
         jwt = JWT.decode(params[:key], ENV["IL_SECRET"])
-        exp_id = jwt[0]['experiment_id']
-        present Experiment.find(exp_id), with: IterativeLearning::Entities::Experiment
+        exp_name = jwt[0]['experiment_name']
+        present Experiment.find_by_name(exp_name), with: IterativeLearning::Entities::Experiment
       end
     end
 

@@ -6,6 +6,8 @@ class Task < ActiveRecord::Base
 
   def prepare
     # build HIT if mturk
+    self.start_values = generation.start_values
+    self.save!
   end
 
   def update_experiment

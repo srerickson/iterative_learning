@@ -9,9 +9,12 @@ module IterativeLearning
       expose :start_values, as: :_start_values
       expose :response_values
       expose :jwt_key, as: :_jwt_key
+      expose :complete?, as: :_complete
     end
 
     class Generation < Grape::Entity
+      expose :active?, as: :_active
+      expose :complete?, as: :_complete
       expose :tasks, using: IterativeLearning::Entities::Task
     end
 
@@ -20,6 +23,7 @@ module IterativeLearning
     end
 
     class Condition < Grape::Entity
+      expose :name
       expose :start_values
       expose :target_values
       expose :chains, using: IterativeLearning::Entities::Chain

@@ -1,17 +1,21 @@
 test_experiment: 
   description: This is a test
 
-  conditions: 
-    - start_values: FUNC_POSITIVE
+  conditions:
+    - name: positive
+      start_values: FUNC_POSITIVE
       target_values: FUNC_POSITIVE
 
-    - start_values: FUNC_NEGATIVE
+    - name: negative
+      start_values: FUNC_NEGATIVE
       target_values: FUNC_NEGATIVE
 
-    - start_values: FUNC_NONLINEAR
+    - name: nonlinear
+      start_values: FUNC_NONLINEAR
       target_values: FUNC_NONLINEAR
 
-    - start_values: FUNC_RANDOM
+    - name: random
+      start_values: FUNC_RANDOM
       target_values: FUNC_RANDOM
 
   chains_per_condition: 1
