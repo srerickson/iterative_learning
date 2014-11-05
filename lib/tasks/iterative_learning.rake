@@ -13,8 +13,9 @@ namespace :il do
       # build conditions associations
       configs.delete('conditions').each do |cond_config|
         condition = experiment.conditions.build
-        condition.start_values = IterativeLearning.build_condition(cond_config['start_values'], 100)
-        condition.target_values = IterativeLearning.build_condition(cond_config['target_values'], 100)
+        num_values = cond_config['num_values']
+        condition.start_values = IterativeLearning.build_condition(cond_config['start_values'], num_values)
+        condition.target_values = IterativeLearning.build_condition(cond_config['target_values'], num_values)
         condition.name = cond_config['name']
       end
       experiment.update_attributes!( configs )

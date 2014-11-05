@@ -5,18 +5,23 @@ test_experiment:
     - name: positive
       start_values: FUNC_POSITIVE
       target_values: FUNC_POSITIVE
+      num_values: 10
 
     - name: negative
       start_values: FUNC_NEGATIVE
       target_values: FUNC_NEGATIVE
+      num_values: 10
+
 
     - name: nonlinear
       start_values: FUNC_NONLINEAR
       target_values: FUNC_NONLINEAR
+      num_values: 10
 
     - name: random
       start_values: FUNC_RANDOM
       target_values: FUNC_RANDOM
+      num_values: 10
 
   chains_per_condition: 1
   generations_per_chain: 2

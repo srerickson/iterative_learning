@@ -11,9 +11,9 @@ use Rack::Cors do
   end
 end
 
-#use Rack::Static, urls: [
-#  "/scripts",
-#  "/styles"
-#], root: "public", index: 'index.html'
+use Rack::Static, urls: [
+ "/scripts",
+ "/styles"
+], root: "public", index: 'index.html'
 
 run IterativeLearning::API
