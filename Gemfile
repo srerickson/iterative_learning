@@ -4,7 +4,8 @@ gem "grape"
 gem "grape-entity"
 gem 'rack-cors'
 gem 'hashie_rails'
-gem "pg"
+gem 'sqlite3'
+# gem "pg"
 gem "activerecord"
 gem "thin"
 gem "jwt"

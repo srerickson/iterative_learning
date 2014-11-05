@@ -1,5 +1,8 @@
 class Condition < ActiveRecord::Base
 
+  serialize :start_values, JSON
+  serialize :target_values, JSON
+
   belongs_to :experiment, inverse_of: :conditions
   validates_presence_of :experiment
 

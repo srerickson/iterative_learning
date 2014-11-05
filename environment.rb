@@ -9,17 +9,15 @@ require 'rubygems'
 require 'grape'
 require 'grape-entity'
 require 'hashie_rails'
-require 'pg'
+require 'sqlite3'
 require 'active_record'
 require 'require_all'
 
 ### ActiveRecord config
 
 config = ENV['DATABASE_URL'] || {
-    adapter: 'postgresql',
-    host: "localhost",
-    database: "iterative_learning",
-    encoding: 'utf8'
+    adapter: 'sqlite3',
+    database: "experiment_data.db",
   }
 
 ActiveRecord::Base.establish_connection(config)

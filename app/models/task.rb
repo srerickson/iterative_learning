@@ -1,8 +1,10 @@
 class Task < ActiveRecord::Base
 
   belongs_to :generation, inverse_of: :tasks
-  
   validates_presence_of :generation
+
+  serialize :start_values, JSON
+  serialize :response_values, JSON
 
   def prepare
     # build HIT if mturk

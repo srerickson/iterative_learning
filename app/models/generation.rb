@@ -6,6 +6,7 @@ class Generation < ActiveRecord::Base
   has_many :tasks, dependent: :destroy, inverse_of: :generation
   before_create :build_tasks
 
+  serialize :start_values, JSON
 
   def prepare
     if start_values.empty? 

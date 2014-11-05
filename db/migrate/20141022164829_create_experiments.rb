@@ -27,8 +27,8 @@ class CreateExperiments < ActiveRecord::Migration
     create_table :conditions do |t|
       t.integer :experiment_id
       t.string  :name
-      t.json    :start_values, default: []
-      t.json    :target_values, default: []
+      t.text    :start_values, default: '[]'
+      t.text    :target_values, default: '[]'
     end
 
     create_table :chains do |t|
@@ -38,7 +38,7 @@ class CreateExperiments < ActiveRecord::Migration
     create_table :generations do |t|
       t.integer :chain_id
       t.integer :position
-      t.json    :start_values, default: []
+      t.text    :start_values, default: '[]'
     end
 
     create_table :tasks do |t|
@@ -47,8 +47,8 @@ class CreateExperiments < ActiveRecord::Migration
       t.string  :mturk_hit_id
       t.integer :worker_age
       t.string  :worker_gender
-      t.json    :start_values, default: []
-      t.json    :response_values
+      t.text    :start_values, default: '[]'
+      t.text    :response_values
       t.timestamps
     end
 
