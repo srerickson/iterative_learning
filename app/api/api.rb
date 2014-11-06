@@ -28,6 +28,21 @@ module IterativeLearning
         task_id = jwt[0]['task_id']
         present Task.find(task_id), with: IterativeLearning::Entities::Task
       end
+
+      params do
+        requires :key, type: String, desc: "JWT task key"
+        requires :task
+      end
+      post do
+        puts params
+        jwt = JWT.decode(params[:key], ENV["IL_SECRET"])
+        task_id = jwt[0]['task_id']
+        task = Task.find(task_id)
+        task.update_attributes!(params[:task])
+        task.update_experiment
+      end
+
+
     end
 
   end
