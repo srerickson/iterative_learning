@@ -19,4 +19,5 @@ gem "ruby-aws"
 group :development do 
   gem "rerun"
   gem 'rspec', :require => 'spec'
+  gem 'compass'
 end 
