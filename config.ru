@@ -15,6 +15,6 @@ use Rack::Static, urls: [
  "/scripts",
  "/styles",
  "/views"
-], root: "public", index: 'index.html'
+], root: "frontend/dist", index: 'index.html'
 
 run IterativeLearning::API

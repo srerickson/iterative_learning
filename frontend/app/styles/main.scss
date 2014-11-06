@@ -1,0 +1,102 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+// bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/bootstrap.scss";
+// endbower
+
+$bar-length: 350px;
+$bar-width: 1cm;
+$bar-margin: 1cm;
+
+
+body, html {
+  position:relative;
+  width: 100%;
+  height:100%;
+  margin:0;
+  padding:0;
+}
+
+
+.top-left{
+  position: absolute;
+  top:$bar-margin;
+  left:$bar-margin;
+  // width:100%;
+  // height:100%;
+}
+
+.bottom-right {
+  position: absolute;
+  bottom:$bar-margin;
+  right: $bar-margin;
+  // width:100%;
+  // height:100%;  
+}
+
+div[il-slider] {
+  position: absolute;
+  right: 2.3*$bar-margin;
+  bottom: 0;
+  height: $bar-length;
+}
+
+
+.function-value {
+  border:1px solid black;
+  position: absolute;
+
+  &.horizontal {
+    width: $bar-length;
+    height:$bar-width;
+    .fill {
+      height: 100%;
+    }
+  }
+
+  &.vertical {
+    width: $bar-width;
+    height: $bar-length;
+    .fill {
+      width: 100%;  
+    }
+  }
+
+
+  &.stimulus {
+    top: 0px;
+    left: 0px;
+    .fill {
+      background-color: #00f;
+    }
+  }
+
+  &.response {
+    bottom: 0px;
+    right: 1.2*$bar-margin;
+    .fill {
+      background-color: #f00;
+    }
+  }
+
+  &.feedback {
+    bottom: 0px;
+    right: 0;
+    display: none;
+    .fill {
+      background-color: #FF0;
+    }
+  }
+
+
+  .fill {
+    position:absolute;
+    bottom:0px;
+    left:0px;  
+  }
+
+
+}
+
+.feedback_state .function-value.feedback {
+  display: block;
+}

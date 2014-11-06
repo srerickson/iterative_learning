@@ -1,0 +1,23 @@
+table.experiment {
+  .condition {
+    .chain {
+      .generation {
+        border: 1px dotted black;
+        padding: 10px;
+        &.active { 
+          background-color: #FFFFCC;
+        }
+        .task {
+          width:20px;
+          height:20px;
+          border:1px solid gray;
+          background-color: white;
+          &.complete {
+            background-color: #33FFCC;
+          }
+        }
+
+      }
+    }
+  }
+}
