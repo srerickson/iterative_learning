@@ -13,7 +13,8 @@ end
 
 use Rack::Static, urls: [
  "/scripts",
- "/styles"
+ "/styles",
+ "/views"
 ], root: "public", index: 'index.html'
 
 run IterativeLearning::API
