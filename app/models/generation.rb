@@ -13,7 +13,7 @@ class Generation < ActiveRecord::Base
       if position == 0
         self.start_values = IterativeLearning.partition_values chain.condition.start_values
       else
-        self.start_values = IterativeLearning.repartition_values prev_gen.best_task_response
+        self.start_values = IterativeLearning.partition_values prev_gen.best_task_response
       end
       self.save!
     end
@@ -21,7 +21,7 @@ class Generation < ActiveRecord::Base
   end
 
   def update_experiment(task)
-    next_gen.prepare if self.complete?
+    next_gen.prepare if next_gen.present? and self.complete?
     chain.update_experiment(task)
   end
 
@@ -66,7 +66,16 @@ class Generation < ActiveRecord::Base
   # the 'best' among the child tasks
   def best_task_response
     if complete? 
-      tasks.first.response_values # FOR TESTING
+      min_score = Float::INFINITY
+      best_task = nil
+      tasks.each do |t|
+        score = IterativeLearning::FunctionLearning.sum_of_error(start_values, t.response_values)
+        if score < min_score
+          best_task = t 
+          min_score = score
+        end
+      end
+      best_task.response_values
     else
       nil
     end

@@ -51,17 +51,17 @@ module IterativeLearning
 
 
     def self.sum_of_error(target, trial)
+      target = IterativeLearning.departition_values(target) if target.is_a? Hash
+      trial = IterativeLearning.departition_values(trial) if trial.is_a? Hash
       if target.length != trial.length
         raise "target and trial do not have same length"
       end
-      target = IterativeLearning.departition_values(target) if target.is_a? Hash
-      trial = IterativeLearning.departition_values(trial) if trial.is_a? Hash
       [target, trial].each{ |list| list.sort!{ |a,b| a[:x] <=> b[:x] }}
       err = 0
       (0..target.length-1).each do |i|
         a = target[i].with_indifferent_access
         b = trial[i].with_indifferent_access
-        if (i != a[:x]-1 ) and (i != b[:x]-1)
+        if (a[:x] != b[:x])
           raise "target and trial values do not correspond"
         end
         err += (a[:y] - b[:y]).abs

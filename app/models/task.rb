@@ -6,6 +6,8 @@ class Task < ActiveRecord::Base
   serialize :start_values, JSON
   serialize :response_values, JSON
 
+  # after_commit :update_experiment
+
   def prepare
     # build HIT if mturk
     self.start_values = generation.start_values
