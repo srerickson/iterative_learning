@@ -3,25 +3,7 @@ require 'yaml'
 namespace :il do 
 
   task :build => :environment do 
-    experiment_configs = YAML.load_file ENV['EXP_FILE'] || 'config/experiments.yml'
-    experiment_configs.each_pair do |name, configs| 
-      experiment = Experiment.find_or_initialize_by({name: name})
-
-      # rebuild 
-      experiment.conditions.destroy_all
-      
-      # build conditions associations
-      configs.delete('conditions').each do |cond_config|
-        condition = experiment.conditions.build
-        num_values = cond_config['num_values']
-        condition.start_values = IterativeLearning.build_condition(cond_config['start_values'], num_values)
-        condition.target_values = IterativeLearning.build_condition(cond_config['target_values'], num_values)
-        condition.name = cond_config['name']
-      end
-      experiment.update_attributes!( configs )
-      experiment.prepare
-    end
-
+    Experiment.build_from_config(ENV['EXP_FILE'] || 'config/experiments.yml')
   end
 
   task :list => :environment do 

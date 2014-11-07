@@ -2,8 +2,7 @@ require "spec_helper"
 
 describe "Condition" do
   before :each do
-    @experiment = Experiment.new()
-    @condition = @experiment.conditions.new()
+    @condition = @experiment.conditions.first
   end
 
   it "should be valid with correct values" do
