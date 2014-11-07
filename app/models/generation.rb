@@ -8,20 +8,22 @@ class Generation < ActiveRecord::Base
 
   serialize :start_values, JSON
 
-  def prepare
-    if start_values.empty? 
-      if position == 0
-        self.start_values = IterativeLearning.partition_values chain.condition.start_values
-      else
-        self.start_values = IterativeLearning.partition_values prev_gen.best_task_response
-      end
+  # setup the generation's start values 
+  # and prepare tasks
+  def prepare(start_vals)
+    if self.start_values.empty?
+      self.start_values = IterativeLearning.training_test_split(start_vals)
       self.save!
     end
     tasks.each(&:prepare)
   end
 
+  # propagate task completion event
+  # up the experiment hierarchy
   def update_experiment(task)
-    next_gen.prepare if next_gen.present? and self.complete?
+    if next_gen.present? and self.complete? # prepare next generation? 
+      next_gen.prepare(best_task_response)
+    end
     chain.update_experiment(task)
   end
 
@@ -65,19 +67,17 @@ class Generation < ActiveRecord::Base
   # Returns the task reponse that is 
   # the 'best' among the child tasks
   def best_task_response
-    if complete? 
-      min_score = Float::INFINITY
+    if complete?
+      best_score = Float::INFINITY
       best_task = nil
       tasks.each do |t|
-        score = IterativeLearning::FunctionLearning.sum_of_error(start_values, t.response_values)
-        if score < min_score
+        score = t.response_fitness
+        if score < best_score
           best_task = t 
-          min_score = score
+          best_score = score
         end
       end
       best_task.response_values
-    else
-      nil
     end
   end
 

@@ -8,7 +8,8 @@ class Chain < ActiveRecord::Base
 
   def prepare 
     # prepare the first genertion
-    generations.first.prepare
+    # QUESTION: partition here or later?
+    generations.first.prepare(condition.start_values)
   end
 
 

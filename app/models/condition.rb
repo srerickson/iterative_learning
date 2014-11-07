@@ -17,6 +17,11 @@ class Condition < ActiveRecord::Base
     experiment.update_experiment(task)
   end
 
+  def fitness(vals)
+    # FIXME -- use the registered fitness function
+    IterativeLearning::FunctionLearning.sum_of_error(self.target_values, vals)
+  end
+
   protected 
 
   def build_chains

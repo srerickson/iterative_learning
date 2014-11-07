@@ -18,27 +18,15 @@ module IterativeLearning
   def self.build_condition(name,num)
     @@TaskConditions[name].call(num)
   end
-
   
   # Partition values into training/testing sets
-  # QUESTION: overlap?
-  def self.partition_values(values=[], train_ratio=0.5)
-    shuffled = values.shuffle
+  def self.training_test_split(values=[], train_ratio=0.5)
     training_count = (values.length*train_ratio).floor
     {
-      'training' => shuffled.take(training_count),
-      'testing' => shuffled.drop(training_count)
+      'training' => values.shuffle.take(training_count),
+      'testing' => values.shuffle
     }
   end
 
-  def self.departition_values(partitioned_values)
-    partitioned_values['training'] + partitioned_values['testing']
-  end
-
-  def self.repartition_values(values=[], train_ratio=0.5)
-    self.partition_values(
-      self.departition_values(values), train_ratio
-    )
-  end
 
 end

@@ -26,5 +26,8 @@ class Task < ActiveRecord::Base
     JWT.encode({task_id: self.id}, ENV['IL_SECRET'])
   end
 
+  def response_fitness
+    self.generation.chain.condition.fitness( self.response_values )
+  end
 
 end
