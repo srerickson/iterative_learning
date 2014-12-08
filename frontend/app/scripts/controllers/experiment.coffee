@@ -1,14 +1,14 @@
 'use strict'
 
 angular.module('iterativeLearningApp')
-  .controller 'ExperimentCtrl', ($scope, $http, $stateParams) ->
+  .controller 'ExperimentCtrl', ($scope, $http, $stateParams, ilHost) ->
 
 
 
     $scope.experiment = {}
 
     # SETUP
-    $http.get("/experiment?key=#{$stateParams.key}")
+    $http.get(ilHost+"/experiment?key=#{$stateParams.key}")
       .then (resp)->
         $scope.experiment = resp.data
       ,(err)->

@@ -20,3 +20,10 @@ angular.module('iterativeLearningApp', ['ui.router'])
     url: "/experiment?key"
     controller: "ExperimentCtrl"
     templateUrl: "views/experiment.html"
+
+
+# For production:
+#.constant("ilHost","")
+
+# For development:
+.constant("ilHost","http://localhost:3000/")
