@@ -6,11 +6,11 @@
   </div>
 
   <div class="bottom-right {{state_name()}}_state" ng-class="{hidden: state_name() == 'complete'}">
-    <div il-slider ng-model="current_response"></div>
+    <div il-slider ng-model="active_response"></div>
     <div class="function-value response vertical">
-      <div class="fill" style="height:{{ current_response }}%"></div>
+      <div class="fill" style="height:{{ active_response }}%"></div>
     </div>
-    <div class="function-value feedback vertical">
+    <div class="function-value feedback vertical" ng-class="{hidden: !show_feedback}">
       <div class="fill" style="height:{{ y() }}%"></div>
     </div>
   </div>
@@ -21,7 +21,7 @@
 
   <div style="position:absolute;width:33%;height:33%;margin:0 33%;bottom:1cm;border:1px dashed grey">
     <p class="small">
-      state: {{ state_name() }} |  Step {{ step+1}} of {{ max_steps }}
+      {{status_message()}}
     </p>
     <p>
       <a class="btn btn-success" ng-click="next()" ng-class="{disabled: state_name()=='complete'}">next</a> 

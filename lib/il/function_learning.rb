@@ -50,13 +50,26 @@ module IterativeLearning
     IterativeLearning.register_condition_builder('FUNC_NONLINEAR',self.method(:nonlinear))
 
 
+    # Returns the sum of difference between test and target.
+    # test & target may be either arrays of objects with 'x','y' keys
+    # OR a hash with testing/training sets, which are arrays of objects with x/y keys.
+    # In the latter case, only the 'test' array will be used to evaluate sum of difference. 
+    #
     def self.sum_of_error(target, test)
-      # target = IterativeLearning.departition_values(target) if target.is_a? Hash
-      # test = IterativeLearning.departition_values(test) if test.is_a? Hash
+
+      # may be partitioned into test/training sets 
+      test = test['testing'] if test.is_a? Hash and test.has_key? 'testing'
+      target = target['testing'] if target.is_a? Hash and target.has_key? 'testing'
+
       if target.length != test.length
         raise "target and test do not have same length"
       end
-      [target, test].each{ |list| list.sort!{ |a,b| a[:x] <=> b[:x] }}
+
+      # sort test & target by x values
+      [target, test].each do |list|
+        list.sort!{ |a,b| a.with_indifferent_access[:x] <=> b.with_indifferent_access[:x] }
+      end
+
       err = 0
       (0..target.length-1).each do |i|
         a = target[i].with_indifferent_access
