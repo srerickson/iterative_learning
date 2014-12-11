@@ -22,8 +22,14 @@ angular.module('iterativeLearningApp', ['ui.router'])
     templateUrl: "views/experiment.html"
 
 
+  $stateProvider.state "experiment.results",
+    url: "/viz?task_key"
+    controller: "ExperimentResultsCtrl"
+    templateUrl: "views/results.html"
+
+
 # For production:
 .constant("ilHost","")
 
 # For development:
-#.constant("ilHost","http://localhost:3000/")
+# .constant("ilHost","http://localhost:3000/")
