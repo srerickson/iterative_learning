@@ -3,7 +3,7 @@ module IterativeLearning
 
   module FunctionLearning
 
-    # utility for keeping even distibution of elements in an array
+    # utility for pulling evenly distributed subset of array elements
     class ::Array
       def spread(n)
         step = self.length.to_f / (n -1) 
@@ -25,7 +25,7 @@ module IterativeLearning
       values = []
       (range[0]..range[1]).each do |i|
         x = i
-        y = num + 1 - i
+        y = range[1] + 1 - i
         values.push({x: x, y: y})
       end
       values.spread(num)
