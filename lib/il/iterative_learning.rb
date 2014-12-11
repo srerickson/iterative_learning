@@ -15,8 +15,8 @@ module IterativeLearning
     @@TaskConditions[name] = method
   end
 
-  def self.build_condition(name,num)
-    @@TaskConditions[name].call(num)
+  def self.build_condition(name,num,range=[1,num])
+    @@TaskConditions[name].call(num, range)
   end
   
   # Partition values into training/testing sets

@@ -3,44 +3,53 @@ module IterativeLearning
 
   module FunctionLearning
 
-    def self.positive(num)
+    # utility for keeping even distibution of elements in an array
+    class ::Array
+      def spread(n)
+        step = self.length.to_f / (n -1) 
+        (0..(n-2)).to_a.collect{|i| self[i * step]} + [self.last]
+      end
+    end
+
+    def self.positive(num, range=[1,num])
       values = []
-      (1..num).each do |i|
+      (range[0]..range[1]).each do |i|
         x = i
         y = x
         values.push({x: x, y: y})
       end
-      values
+      values.spread(num)
     end
 
-    def self.negative(num)
+    def self.negative(num, range=[1,num])
       values = []
-      (1..num).each do |i|
+      (range[0]..range[1]).each do |i|
         x = i
         y = num + 1 - i
         values.push({x: x, y: y})
       end
-      values
+      values.spread(num)
     end
 
-    def self.random(num)
+    def self.random(num, range=[1,num])
       values = []
-      (1..num).each do |i|
+      (range[0]..range[1]).each do |i|
         x = i
-        y = rand(num)+1
+        y = rand(range[0]..range[1])
         values.push({x: x, y: y})
       end
-      values
+      values.spread(num)
     end
 
-    def self.nonlinear(num)
+    def self.nonlinear(num, range=[1,num])
       values = []
-      (1..num).each do |i|
+      mid = (range[1]-range[0]+1)/2.0
+      (range[0]..range[1]).each do |i|
         x = i
-        y = (50.5 + 49.5 * Math::sin(Math::PI/2 + x/(5*Math::PI))).round
+        y = (mid+0.5 + (mid-0.5) * Math::sin(Math::PI/2 + x/(5*Math::PI))).round
         values.push({x: x, y: y})
       end
-      values
+      values.spread(num)
     end
 
 
