@@ -21,8 +21,14 @@ class Generation < ActiveRecord::Base
   # propagate task completion event
   # up the experiment hierarchy
   def update_experiment(task)
-    if next_gen.present? and self.complete? # prepare next generation? 
-      next_gen.prepare(best_task_response)
+    if next_gen.present? and self.complete? # prepare next generation?
+      # send this generation's best task response to next generation
+      if best_task_response.is_a? Hash
+        next_start_vals = best_task_response['testing']
+      else
+        next_start_vals = best_task_response
+      end
+      next_gen.prepare(next_start_vals)
     end
     chain.update_experiment(task)
   end
