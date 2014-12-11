@@ -17,7 +17,12 @@
                   <table>
                     <tr>
                       <td ng-repeat="task in generation.tasks" class="task" ng-class="{complete: task._complete}">
-                        <a ui-sref="task({key: task._jwt_key})">task</a>
+                        <a ui-sref="task({key: task._jwt_key})">
+                          task
+                        </a>
+                        <a ui-sref="experiment.results({task_key: task._jwt_key})">
+                          viz
+                        </a>
                       </td>
                     </tr>
                   </table>
@@ -31,5 +36,8 @@
   </tr>
 
 </table>
+
+
+<div ui-view></div>
 
 
