@@ -1,28 +1,23 @@
 <div>
-  <div class="top-left {{state_name()}}_state" ng-class="{hidden: state_name() == 'complete'}">
+  <div class="top-left {{state.name }}_state">
     <div class="function-value stimulus horizontal">
       <div class="fill" style="width:{{ x() }}%"></div>
     </div>
   </div>
 
-  <div class="bottom-right {{state_name()}}_state" ng-class="{hidden: state_name() == 'complete'}">
-    <div il-slider ng-model="active_response"></div>
+  <div class="bottom-right {{ state.name }}_state" >
+    <div il-slider ng-model="state.guess"></div>
     <div class="function-value response vertical">
-      <div class="fill" style="height:{{ active_response }}%"></div>
-    </div>
-    <div class="function-value feedback vertical" ng-class="{hidden: !show_feedback}">
-      <div class="fill" style="height:{{ y() }}%"></div>
+      <div class="fill" style="height:{{ state.guess }}%"></div>
     </div>
   </div>
 
-  <div class="controls_wrapper {{state_name()}}_state">
+  <div class="controls_wrapper {{ state.name }}_state">
     <p class="small">
       {{status_message()}}
     </p>
     <p>
-      <a class="btn btn-success" ng-click="next()" ng-class="{disabled: state_name()=='complete'}">next</a> 
-      &nbsp; &nbsp;
-      <a class="btn btn-success" ng-click="submit()" ng-class="{disabled: state_name() != 'complete'}">submit</a>
+      <a class="btn btn-success" ng-click="next()">next</a> 
     </p>
   </div>
 </div>
