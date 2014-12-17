@@ -8,13 +8,33 @@
  #
  # Main module of the application.
 ###
-angular.module('iterativeLearningApp', ['ui.router'])
+angular.module('iterativeLearningApp', ['ui.router', 'ngSanitize'])
 
 .config ($stateProvider) ->
   $stateProvider.state "task",
     url: "/task?key&assignmentId&hitId&workerId&turkSubmitTo"
-    controller: "MainCtrl"
-    templateUrl: "views/main.html"
+    controller: "TaskCtrl"
+    templateUrl: "views/task/main.html"
+    resolve: 
+        task: ($http, $stateParams, ilHost) ->
+          $http.get(ilHost+"/task?key=#{$stateParams.key}")
+            .then (resp)->
+              resp.data
+
+.config ($stateProvider) ->
+  $stateProvider.state "task.training",
+    url: "/training"
+    controller: "TaskTrainingCtrl"
+    templateUrl: "views/task/training.html"
+
+.config ($stateProvider) ->
+  $stateProvider.state "task.testing",
+    url: "/testing"
+    controller: "TaskTestingCtrl"
+    templateUrl: "views/task/training.html"
+
+
+
 
   $stateProvider.state "experiment",
     url: "/experiment?key"
@@ -32,4 +52,4 @@ angular.module('iterativeLearningApp', ['ui.router'])
 .constant("ilHost","")
 
 # For development:
-# .constant("ilHost","http://localhost:3000/")
+#.constant("ilHost","http://localhost:3000/")
