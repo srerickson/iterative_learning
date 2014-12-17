@@ -30,4 +30,8 @@ class Task < ActiveRecord::Base
     self.generation.chain.condition.fitness( self.response_values )
   end
 
+  def frontend_config
+    generation.chain.condition.experiment.frontend_config
+  end
+
 end

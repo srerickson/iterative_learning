@@ -10,6 +10,7 @@ module IterativeLearning
       expose :response_values
       expose :jwt_key, as: :_jwt_key
       expose :complete?, as: :_complete
+      expose :frontend_config, unless: :collection
     end
 
     class Generation < Grape::Entity
