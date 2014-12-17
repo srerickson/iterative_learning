@@ -38,3 +38,48 @@ test_experiment:
 
   percent_test_for_training: 50
   generation_shared_values: true
+  frontent_settings: 
+    intro_help_text: |
+      <p>
+      Welcome. Thank you for agreeing to take part in this experiment.
+      </p><p>
+      In this experiment, we simply want to measure your ability to learn the relationship between the lengths of two different lines.
+      </p><p>
+      There are two stages: a Training Phase, and a Testing Phase.
+      </p><p>
+      In the Training Phase, you will see:
+      one horizontal bar, across the top of the screen, partly filled in blue
+      one vertical bar, along the right-hand side of the screen, empty
+      a slider next to the vertical bar
+      Like this:
+      </p><p>
+      [screen shot, with labels i.e. some ugly text, pointing out where the horizontal bar is, etc]
+      </p><p>
+      Any % of the horizontal bar, from 1% to 100%, can be filled in blue. In the figure above, approximately x% is filled in blue.
+      </p><p>
+      You must drag the slider next to the vertical bar, on the right. As you do, that bar will fill with red.
+      </p><p>
+      There is a correct amount of red (in the vertical bar), for each amount of blue (in the horizontal bar). At the beginning of the experiment, you will not know what the correct amounts are, so you can guess. Drag the slider to any part of the vertical bar. Like this:
+      </p><p>
+      [screen shot]
+      </p><p>
+      When you have done this, click ‘Next’. After you have clicked ‘Next’, another vertical bar will appear, partly filled in yellow. This indicates the correct amount of the vertical bar that should be filled in, given the amount of the horizontal bar that is filled in. Like this:
+      </p><p>
+      [screen shot]
+      </p><p>
+      If your guess was correct, or close to correct, you will hear a ‘Ding!’ noise, and the word ‘Correct!’ will appear on the screen. You can now click ‘Next’, and move on to the next round.
+      </p><p>
+      If it was incorrect (as in the image above), you will hear a ‘Buzz!’ noise, and the word ‘Incorrect’ will appear on the screen. You must now drag the slider to the same level as the yellow bar (or close to it). You can then click ‘Next’ to move on to the next round.
+      </p><p>
+      There are X rounds in the Training Phase. You should try to remember how much of the red bar should be filled in, for each amount of the blue bar.
+      </p><p>
+      Once you have completed the Training Phase, you will move on to the Testing Phase.
+      The Testing Phase is the same as the Training Phase, except that here there is no feedback. In other words, there will be no yellow bar, and no noises. Instead, after you click ‘Next’, you will move straight on to the next round. You will not be told if you were correct or not.
+      </p><p>
+      There are Y rounds in the Testing Phase.
+      </p><p>
+      Once you have completed the Testing Phase, click ‘Submit’ to complete the experiment. [For MTurk: ‘You will then receive your compensation for taking part’] Many thanks.
+    testing_help_text: |
+      You have now completed the Training Phase. You will now move on to the Testing Phase. Here, there will be no yellow bar, and no feedback. You must decide for yourself what height to set the slider, based on what you learned in the Training Phase.|
+    final_help_text: |
+      Thank you for taking part. 

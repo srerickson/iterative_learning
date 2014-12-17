@@ -21,6 +21,8 @@ class CreateExperiments < ActiveRecord::Migration
       t.integer :mturk_time_to_expire
       t.string  :mturk_qualifications
 
+      t.text    :frontend_config, default: '{}'
+
       t.timestamps
     end
 

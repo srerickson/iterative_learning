@@ -47,6 +47,7 @@ module IterativeLearning
       expose :mturk_time_to_expire
       expose :mturk_qualifications
       expose :conditions, using: IterativeLearning::Entities::Condition
+      expose :frontend_config
     end
 
 
