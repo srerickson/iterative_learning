@@ -38,7 +38,7 @@ test_experiment:
 
   percent_test_for_training: 50
   generation_shared_values: true
-  frontent_settings: 
+  frontend_config: 
     intro_help_text: |
       <p>
       Welcome. Thank you for agreeing to take part in this experiment.
