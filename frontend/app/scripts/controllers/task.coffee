@@ -7,6 +7,7 @@ angular.module('iterativeLearningApp')
     # UI help texts 
     if task.frontend_config
       $scope.intro_text = task.frontend_config.intro_help_text
+      $scope.testing_help_text = task.frontend_config.testing_help_text
 
     # task state values
     $scope.state =
@@ -110,7 +111,7 @@ angular.module('iterativeLearningApp')
               $scope.state.transitioning = false
               $scope.feedback_message = default_message
             else
-              $state.go("task.testing")
+              $state.go("task.testing_intro")
           , delay)
           return true
         else
