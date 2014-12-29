@@ -5,7 +5,8 @@ angular.module('iterativeLearningApp')
   .controller 'TaskCtrl', ($scope, $stateParams, $state, task) ->
 
     # UI help texts 
-    $scope.intro_text = task.frontend_config.intro_help_text
+    if task.frontend_config
+      $scope.intro_text = task.frontend_config.intro_help_text
 
     # task state values
     $scope.state =
