@@ -9,12 +9,9 @@ describe 'Controller: TaskTrainingCtrl', ->
   TrainingCtrl = {}
   scope = {}
   task = {}
-  _$state = {}
 
   # Initialize the controller and a mock scope
-  beforeEach inject ($controller, $rootScope, $state, mockTaskJSON) ->
-    _$state = $state
-    spyOn(_$state, 'go');
+  beforeEach inject ($controller, $rootScope, mockTaskJSON) ->
     task = mockTaskJSON
     main_scope = $rootScope.$new()
     $controller 'TaskCtrl', {
@@ -34,12 +31,14 @@ describe 'Controller: TaskTrainingCtrl', ->
     expect( scope.state.guess         ).toBe null
 
 
-  it 'should proceed to testing after all responses collected', ->
+  it 'should proceed to testing after all responses collected', inject ($state, $timeout)->
+    spyOn($state, 'go');
     for data in task._start_values.training 
       scope.state.guess = data.y
-      expect( scope.guess_is_correct()).toBe true
+      expect( scope.guess_is_correct(0)).toBe true
       scope.next()
-    expect(_$state.go).toHaveBeenCalledWith("task.testing")
+      $timeout.flush()
+    expect($state.go).toHaveBeenCalledWith("task.testing")
 
 
 
