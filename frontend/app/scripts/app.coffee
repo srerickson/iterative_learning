@@ -33,7 +33,11 @@ angular.module('iterativeLearningApp', ['ui.router', 'ngSanitize'])
     controller: "TaskTestingCtrl"
     templateUrl: "views/task/training.html"
 
-
+.config ($stateProvider) ->
+  $stateProvider.state "task.final",
+    url: "/final"
+    controller: "TaskFinalCtrl"
+    templateUrl: "views/task/final.html"
 
 
   $stateProvider.state "experiment",
@@ -49,7 +53,7 @@ angular.module('iterativeLearningApp', ['ui.router', 'ngSanitize'])
 
 
 # For production:
-.constant("ilHost","")
+#.constant("ilHost","")
 
 # For development:
-#.constant("ilHost","http://localhost:3000/")
+.constant("ilHost","http://localhost:3000/")

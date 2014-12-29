@@ -2,7 +2,7 @@
 
 
 angular.module('iterativeLearningApp')
-  .controller 'TaskCtrl', ($scope, $http, $stateParams, $state, ilHost, task) ->
+  .controller 'TaskCtrl', ($scope, $stateParams, $state, task) ->
 
     # UI help texts 
     $scope.intro_text = task.frontend_config.intro_help_text
@@ -30,7 +30,7 @@ angular.module('iterativeLearningApp')
         })
 
     # adds a response for the current step
-    $scope.push_response = ()->
+    $scope.save_response = ()->
       new_response = responses[$scope.state.name][$scope.state.step]
       new_response.time = new Date().getTime()
       new_response.y = $scope.state.guess
@@ -62,14 +62,17 @@ angular.module('iterativeLearningApp')
       "#{s_name}: step #{$scope.state.step+1} of #{$scope.task_length(s_name)} "
 
     $scope.submit = ()->
-      if current_state == states.complete
         data = task: 
           response_values: responses
         $http.post(ilHost+"/task?key=#{$stateParams.key}", data)
+          .then (ok)->
+            $scope.submitted = true
+          ,(err)->
+            console.log err
 
 
 
-angular.module('iterativeLearningApp')
+
   .controller 'TaskTrainingCtrl', ($scope, $state) ->
 
     $scope.$parent.state = 
@@ -82,14 +85,13 @@ angular.module('iterativeLearningApp')
       # do nothing if no input 
       return if $scope.state.guess == null 
       # keep the first guess for this step
-      $scope.push_response() if !$scope.state.show_feedback
+      $scope.save_response() if !$scope.state.show_feedback
       if $scope.guess_is_correct()
         if $scope.state.step < $scope.task_length('training')-1
           # continue to next training value
           $scope.state.step += 1 
           $scope.state.guess = null
           $scope.state.show_feedback = false
-          $scope.state.guess = null
         else
           # transition to testing
           $state.go("task.testing")
@@ -99,8 +101,7 @@ angular.module('iterativeLearningApp')
 
 
 
-angular.module('iterativeLearningApp')
-  .controller 'TaskTestingCtrl', ($scope) ->
+  .controller 'TaskTestingCtrl', ($scope, $state) ->
 
     $scope.$parent.state = 
       name: "testing"
@@ -111,12 +112,18 @@ angular.module('iterativeLearningApp')
     $scope.next = ()->
       # do nothing if no input
       return if $scope.state.guess == null 
-      $scope.push_response()
-      $scope.state.guess = null
+      $scope.save_response()
       if $scope.state.step < $scope.task_length('testing')-1
+        $scope.state.guess = null
         $scope.state.step += 1 # continue with testing 
       else
-        $state.go("task.submit")
+        $state.go("task.final")
+
+
+
+
+  .controller 'TaskFinalCtrl', ($scope, $stateParams, $state, $http, ilHost) ->
+    $scope.$parent.submit()
 
 
 
