@@ -22,9 +22,12 @@ test_experiment:
       start_values: FUNC_RANDOM
       target_values: FUNC_RANDOM
       num_values: 10
+      range:
+        - 1
+        - 100
 
-  chains_per_condition: 1
-  generations_per_chain: 2
+  chains_per_condition: 2
+  generations_per_chain: 3
   tasks_per_generation: 3
 
   is_mturk: true
@@ -38,7 +41,7 @@ test_experiment:
 
   percent_test_for_training: 50
   generation_shared_values: true
-  frontend_config: 
+  frontend_config:
     intro_help_text: |
       <p>
       Welcome. Thank you for agreeing to take part in this experiment.
@@ -79,7 +82,11 @@ test_experiment:
       There are Y rounds in the Testing Phase.
       </p><p>
       Once you have completed the Testing Phase, click ‘Submit’ to complete the experiment. [For MTurk: ‘You will then receive your compensation for taking part’] Many thanks.
+
+    next_button_help_text: Adjust the vertical slider and click Next
+    training_correct_text: <b>Correct!</b>
+    training_wrong_text: <b>Incorrect.</b><br/>Adjust the slider to the correct value (indicated by the yellow bar) and click Next
     testing_help_text: |
-      You have now completed the Training Phase. You will now move on to the Testing Phase. Here, there will be no yellow bar, and no feedback. You must decide for yourself what height to set the slider, based on what you learned in the Training Phase.|
+      You have now completed the Training Phase. You will now move on to the Testing Phase. Here, there will be no yellow bar, and no feedback. You must decide for yourself what height to set the slider, based on what you learned in the Training Phase.
     final_help_text: |
       Thank you for taking part. 

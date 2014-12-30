@@ -6,8 +6,7 @@ angular.module('iterativeLearningApp')
 
     # UI help texts 
     if task.frontend_config
-      $scope.intro_text = task.frontend_config.intro_help_text
-      $scope.testing_help_text = task.frontend_config.testing_help_text
+      $scope.messages = task.frontend_config
 
     # task state values
     $scope.state =
@@ -85,12 +84,9 @@ angular.module('iterativeLearningApp')
       transitioning: false
       guess: null
 
-    default_message = "Adjust the vertical slider and click Next"
-    correct_message = "Good!"
-    wrong_message = "Adjust the slider to the correct value (indicated by the yellow bar) and click next"
     delay = 1500
 
-    $scope.feedback_message = default_message
+    $scope.feedback_message = $scope.messages.next_button_help_text
 
 
     $scope.next = ()-> 
@@ -101,7 +97,7 @@ angular.module('iterativeLearningApp')
         # always show feedback
         $scope.state.show_feedback = true 
         if $scope.guess_is_correct()
-          $scope.feedback_message = correct_message
+          $scope.feedback_message = $scope.messages.training_correct_text
           $scope.state.transitioning = true
           $timeout( ()->
             if $scope.state.step < $scope.task_length('training')-1
@@ -109,13 +105,13 @@ angular.module('iterativeLearningApp')
               $scope.state.guess = null
               $scope.state.show_feedback = false
               $scope.state.transitioning = false
-              $scope.feedback_message = default_message
+              $scope.feedback_message = $scope.messages.next_button_help_text
             else
               $state.go("task.testing_intro")
           , delay)
           return true
         else
-          $scope.feedback_message = wrong_message
+          $scope.feedback_message = $scope.messages.training_wrong_text
           return false    
 
 
