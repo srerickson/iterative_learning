@@ -38,7 +38,7 @@ describe 'Controller: TaskTrainingCtrl', ->
       expect( scope.guess_is_correct(0)).toBe true
       scope.next()
       $timeout.flush()
-    expect($state.go).toHaveBeenCalledWith("task.testing")
+    expect($state.go).toHaveBeenCalledWith("task.testing_intro")
 
 
 
