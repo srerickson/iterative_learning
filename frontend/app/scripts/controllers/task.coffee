@@ -22,14 +22,21 @@ angular.module('iterativeLearningApp')
       testing: []
     }
 
+    $scope.task_is_doable = ()->
+      !!task._start_values.testing and
+      !!task._start_values.training and
+      task.response_values == null
+
+
     # build response structure
-    for phase in ['testing', 'training']
-      for i in task._start_values[phase]
-        responses[phase].push({
-          x: i.x
-          y: null
-          time: null
-        })
+    if $scope.task_is_doable()
+      for phase in ['testing', 'training']
+        for i in task._start_values[phase]
+          responses[phase].push({
+            x: i.x
+            y: null
+            time: null
+          })
 
     # adds a response for the current step
     $scope.save_response = ()->

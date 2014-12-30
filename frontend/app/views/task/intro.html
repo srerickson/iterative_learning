@@ -1,8 +1,16 @@
 <div ui-view="">
-  <div class="intro_text_wrapper">
+
+  <div class="intro_text_wrapper" ng-show="task_is_doable()">
     <div  ng-bind-html="messages.intro_help_text"></div>
     <p>
       <a class="btn btn-primary" ui-sref="task.training">continue to training ></a>
     </p>
   </div>
+
+  <!-- If not available -->
+  <div class="intro_text_wrapper" ng-show="!task_is_doable()">
+    <h3>Nothing to see here</h3>
+    <p>This task isn't available right now</p>
+  </div>
+
 </div>
