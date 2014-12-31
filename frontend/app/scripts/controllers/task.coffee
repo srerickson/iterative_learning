@@ -22,10 +22,26 @@ angular.module('iterativeLearningApp')
       testing: []
     }
 
+    # whether the task can be done, hasn't already been done
     $scope.task_is_doable = ()->
       !!task._start_values.testing and
       !!task._start_values.training and
       task.response_values == null
+
+    # all responses collected?
+    $scope.task_is_complete = (phase = null)->
+      check = (_phase)-> 
+        complete = true
+        for vals in responses[_phase]
+          if vals.y == null
+            complete = false 
+            break
+        complete
+
+      if !!phase
+        return check(phase)
+      else 
+        return check('testing') and check('training')
 
 
     # build response structure
@@ -71,6 +87,7 @@ angular.module('iterativeLearningApp')
       "#{s_name}: step #{$scope.state.step+1} of #{$scope.task_length(s_name)} "
 
     $scope.submit = ()->
+      if $scope.task_is_complete()
         data = task: 
           response_values: responses
         $http.post(ilHost+"/task?key=#{$stateParams.key}", data)
