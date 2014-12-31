@@ -39,7 +39,7 @@ class Task < ActiveRecord::Base
   end
 
   def url
-    ENV["BASE_URL"] + "/#/task/key=#{jwt_key}"
+    ENV["BASE_URL"] + "/#/task?key=#{jwt_key}"
   end
 
   def response_fitness
