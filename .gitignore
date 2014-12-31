@@ -2,3 +2,4 @@
 config/experiments.yml
 experiment_data.db
 tmp/*
+ruby-aws.log

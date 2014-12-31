@@ -42,7 +42,7 @@ module IterativeLearning
       expose :is_mturk
       expose :mturk_title
       expose :mturk_description
-      expose :mutkr_keywords
+      expose :mturk_keywords
       expose :mturk_award # USD
       expose :mturk_time_to_complete
       expose :mturk_time_to_expire

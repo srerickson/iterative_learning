@@ -33,7 +33,7 @@ test_experiment:
   is_mturk: true
   mturk_title: This is a test
   mturk_description: etc etc etc
-  mutkr_keywords: iterative learning
+  mturk_keywords: iterative learning
   mturk_award: 0.01
   mturk_time_to_complete: 60
   mturk_time_to_expire: 60

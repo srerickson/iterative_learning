@@ -15,7 +15,7 @@ class CreateExperiments < ActiveRecord::Migration
       t.boolean :is_mturk, default: false
       t.string  :mturk_title
       t.text    :mturk_description
-      t.string  :mutkr_keywords
+      t.string  :mturk_keywords
       t.integer :mturk_award # USD
       t.integer :mturk_time_to_complete
       t.integer :mturk_time_to_expire
