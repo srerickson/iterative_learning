@@ -2,7 +2,7 @@
 
   <div class="intro_text_wrapper" ng-show="task_is_doable()">
     <div  ng-bind-html="messages.intro_help_text"></div>
-    <p>
+    <p ng-show="!mturk_preview()">
       <a class="btn btn-primary" ui-sref="task.training">continue to training ></a>
     </p>
   </div>

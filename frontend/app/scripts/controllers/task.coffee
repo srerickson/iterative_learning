@@ -22,6 +22,12 @@ angular.module('iterativeLearningApp')
       testing: []
     }
 
+    # returns true if this is an MTurk task/hit and
+    # the HIT is being previewed, not yet assigned
+    $scope.mturk_preview = ()->
+      $stateParams.assignmentId == "ASSIGNMENT_ID_NOT_AVAILABLE"
+
+
     # whether the task can be done, hasn't already been done
     $scope.task_is_doable = ()->
       !!task._start_values.testing and
