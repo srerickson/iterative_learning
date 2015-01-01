@@ -17,4 +17,7 @@ use Rack::Static, urls: [
  "/views"
 ], root: "frontend/dist", index: 'index.html'
 
+
+Grape::API.logger = Logger.new(File.expand_path("../access.log", __FILE__))
+
 run IterativeLearning::API

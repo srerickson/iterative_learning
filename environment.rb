@@ -28,11 +28,6 @@ ActiveRecord::Base.establish_connection(config)
 
 ### Logging 
 
-# if ENV['RACK_ENV'] == "development"
-#   ActiveRecord::Base.logger = Logger.new(STDOUT) 
-# end 
-
-
 require 'lib/il/iterative_learning'
 require 'lib/il/function_learning'
 require 'lib/il/mturk'

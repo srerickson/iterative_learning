@@ -7,6 +7,22 @@ module IterativeLearning
 
     format :json
 
+    rescue_from :all do |e|
+      Grape::API.logger.error "#{e.message}\n#{e.backtrace.join("\n")}"
+      raise e
+    end
+
+    after do 
+      Grape::API.logger.info({
+        short_message: "[#{status}] #{request.request_method} #{request.path}",
+        code: status,
+        ip: request.ip,
+        user_agent: request.user_agent,
+        params: request.params.except('route_info').to_hash,
+      })
+    end
+
+
     resource :experiment do 
       params do
         requires :key, type: String, desc: "JWT experiment key"
