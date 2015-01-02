@@ -17,9 +17,14 @@ angular.module('iterativeLearningApp', ['ui.router', 'ngSanitize'])
     templateUrl: "views/task/intro.html"
     resolve: 
         task: ($http, $stateParams, ilHost) ->
-          $http.get(ilHost+"/task?key=#{$stateParams.key}")
-            .then (resp)->
-              resp.data
+          $http.get(ilHost+"/task?key=#{$stateParams.key}&workerId=#{$stateParams.workerId}")
+            .then(
+              (resp)->
+                resp.data
+              ,(err)->
+                err
+            )
+
 
 # Task States
 .config ($stateProvider) ->

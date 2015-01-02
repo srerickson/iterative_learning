@@ -42,7 +42,13 @@ module IterativeLearning
       get do
         jwt = JWT.decode(params[:key], ENV["IL_SECRET"])
         task_id = jwt[0]['task_id']
-        present Task.find(task_id), with: IterativeLearning::Entities::Task
+
+        # check if mturk worker has already submitted
+        if params[:workerId].present? and Task.where(mturk_worker_id: params[:workerId] ).count > 0
+          error! 'Unauthorized', 401, 'X-Error-Detail' => 'blah blah'
+        else
+          present Task.find(task_id), with: IterativeLearning::Entities::Task
+        end
       end
 
       params do

@@ -30,6 +30,7 @@ angular.module('iterativeLearningApp')
 
     # whether the task can be done, hasn't already been done
     $scope.task_is_doable = ()->
+      !!task._start_values and 
       !!task._start_values.testing and
       !!task._start_values.training and
       task.response_values == null
@@ -96,6 +97,11 @@ angular.module('iterativeLearningApp')
       if $scope.task_is_complete()
         data = task: 
           response_values: responses
+
+        # include mturk worker id, if present
+        if !!$stateParams.workerId
+          data.task.mturk_worker_id = $stateParams.workerId
+
         $http.post(ilHost+"/task?key=#{$stateParams.key}", data)
           .then (ok)->
             $scope.submitted = true
