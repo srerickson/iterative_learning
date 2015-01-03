@@ -95,10 +95,10 @@ angular.module('iterativeLearningApp')
           .then (ok)->
             # submit to MTurk
             if $stateParams.workerId and $stateParams.turkSubmitTo
-              data.assignmentId = $stateParams.turkSubmitTo
+              data.assignmentId = $stateParams.assignmentId
               $http({
                 method: 'POST',
-                url: $stateParams.turkSubmitTo,
+                url: $stateParams.turkSubmitTo + "/mturk/externalSubmit",
                 data: $.param(data),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
               }).then(
