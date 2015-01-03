@@ -62,7 +62,6 @@ class Task < ActiveRecord::Base
     IterativeLearning::MTurk::requester.getHIT({HITId: mturk_hit_id})
   end
 
-
   def disable_hit
     if mturk_hit_id
       IterativeLearning::MTurk::requester.disableHIT({HITId: mturk_hit_id})

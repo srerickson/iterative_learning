@@ -50,17 +50,6 @@ angular.module('iterativeLearningApp')
       else 
         return check('testing') and check('training')
 
-
-    # build response structure
-    if $scope.task_is_doable()
-      for phase in ['testing', 'training']
-        for i in task._start_values[phase]
-          responses[phase].push({
-            x: i.x
-            y: null
-            time: null
-          })
-
     # adds a response for the current step
     $scope.save_response = ()->
       new_response = responses[$scope.state.name][$scope.state.step]
@@ -94,7 +83,7 @@ angular.module('iterativeLearningApp')
       "#{s_name}: step #{$scope.state.step+1} of #{$scope.task_length(s_name)} "
 
     $scope.submit = ()->
-      if $scope.task_is_complete()
+      if !$scope.mturk_preview() and $scope.task_is_complete()
         data = task: 
           response_values: responses
 
@@ -104,9 +93,35 @@ angular.module('iterativeLearningApp')
 
         $http.post(ilHost+"/task?key=#{$stateParams.key}", data)
           .then (ok)->
-            $scope.submitted = true
+            # submit to MTurk
+            if $stateParams.workerId and $stateParams.turkSubmitTo
+              data.assignmentId = $stateParams.turkSubmitTo
+              $http({
+                method: 'POST',
+                url: $stateParams.turkSubmitTo,
+                data: $.param(data),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+              }).then(
+                (resp)->
+                  console.log "mturk OK"
+                ,(err)->
+                  console.log err
+              )
+
+
           ,(err)->
             console.log err
+
+    # Initialize
+    #  - build response structure
+    if $scope.task_is_doable()
+      for phase in ['testing', 'training']
+        for i in task._start_values[phase]
+          responses[phase].push({
+            x: i.x
+            y: null
+            time: null
+          })
 
 
 
