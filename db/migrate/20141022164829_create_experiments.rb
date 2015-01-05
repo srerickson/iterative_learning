@@ -16,7 +16,7 @@ class CreateExperiments < ActiveRecord::Migration
       t.string  :mturk_title
       t.text    :mturk_description
       t.string  :mturk_keywords
-      t.integer :mturk_award # USD
+      t.float   :mturk_award # USD
       t.integer :mturk_time_to_complete
       t.integer :mturk_time_to_expire
       t.string  :mturk_qualifications
