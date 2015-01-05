@@ -17,9 +17,10 @@ class CreateExperiments < ActiveRecord::Migration
       t.text    :mturk_description
       t.string  :mturk_keywords
       t.float   :mturk_award # USD
-      t.integer :mturk_time_to_complete
-      t.integer :mturk_time_to_expire
+      t.integer :mturk_duration, default: "3600"
+      t.integer :mturk_lifetime, default: "31536000"
       t.string  :mturk_qualifications
+      t.boolean :mturk_sandbox, default: false
 
       t.text    :frontend_config, default: '{}'
 

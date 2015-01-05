@@ -35,9 +35,9 @@ test_experiment:
   mturk_description: etc etc etc
   mturk_keywords: iterative learning
   mturk_award: 0.01
-  mturk_time_to_complete: 60
-  mturk_time_to_expire: 60
-  mturk_qualifications: 60
+  mturk_duration: 4800
+  mturk_lifetime: 4800
+  mturk_qualifications: "" # not used
 
   percent_test_for_training: 50
   generation_shared_values: true

@@ -1,6 +1,8 @@
-
+require 'il/mturk'
 
 class Task < ActiveRecord::Base
+
+
 
   belongs_to :generation, inverse_of: :tasks
   validates_presence_of :generation
@@ -8,18 +10,25 @@ class Task < ActiveRecord::Base
   serialize :start_values, JSON
   serialize :response_values, JSON
 
+  include IterativeLearning::MTurk
   before_destroy :disable_hit
+
+  def mturk_sandbox
+    experiment.is_mturk
+  end
 
   def prepare
     self.start_values = generation.start_values
     # build HIT if mturk
     if experiment.is_mturk
-      result = IterativeLearning::MTurk::createHIT(
+      result = createHIT(
         self.url,
         experiment.mturk_title,
         experiment.mturk_description,
         experiment.mturk_keywords,
-        experiment.mturk_award
+        experiment.mturk_award, 
+        experiment.mturk_duration,
+        experiment.mturk_lifetime
       )
       self.mturk_hit_id = result[:HITId]
     end    
@@ -54,17 +63,13 @@ class Task < ActiveRecord::Base
     experiment.frontend_config
   end
 
-  def mturk_url
-    ""
-  end
-
   def mturk_hit
-    IterativeLearning::MTurk::requester.getHIT({HITId: mturk_hit_id})
+    requester.getHIT({HITId: mturk_hit_id})
   end
 
   def disable_hit
     if mturk_hit_id
-      IterativeLearning::MTurk::requester.disableHIT({HITId: mturk_hit_id})
+      requester.disableHIT({HITId: mturk_hit_id})
     end
   end
 
