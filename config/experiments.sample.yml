@@ -6,17 +6,25 @@ test_experiment:
       start_values: FUNC_POSITIVE
       target_values: FUNC_POSITIVE
       num_values: 100
+      range:
+        - 1
+        - 100
 
     - name: negative
       start_values: FUNC_NEGATIVE
       target_values: FUNC_NEGATIVE
       num_values: 100
-
+      range:
+        - 1
+        - 100
 
     - name: nonlinear
       start_values: FUNC_NONLINEAR
       target_values: FUNC_NONLINEAR
       num_values: 100
+      range:
+        - 1
+        - 100
 
     - name: random
       start_values: FUNC_RANDOM
@@ -31,12 +39,13 @@ test_experiment:
   tasks_per_generation: 3
 
   is_mturk: true
+  mturk_sandbox: true
   mturk_title: This is a test
   mturk_description: etc etc etc
   mturk_keywords: iterative learning
   mturk_award: 0.01
-  mturk_duration: 4800
-  mturk_lifetime: 4800
+  mturk_duration: 3600 # one hour for HIT to to be completed
+  mturk_lifetime: 31536000 # one year until HIT expires
   mturk_qualifications: "" # not used
 
   percent_test_for_training: 50

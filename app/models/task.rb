@@ -14,7 +14,7 @@ class Task < ActiveRecord::Base
   before_destroy :disable_hit
 
   def mturk_sandbox
-    experiment.is_mturk
+    experiment.mturk_sandbox
   end
 
   def prepare
