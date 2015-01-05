@@ -108,7 +108,7 @@ angular.module('iterativeLearningApp')
 
         $http.post(ilHost+"/task?key=#{$stateParams.key}", data)
           .then (ok)->
-            $scope.submitted = true
+            $scope.submitted = data
             ## submit to MTurk
             # if $stateParams.workerId and $stateParams.turkSubmitTo
             #   data.assignmentId = $stateParams.assignmentId
