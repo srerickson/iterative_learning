@@ -12,4 +12,14 @@ namespace :il do
     end
   end
 
+  
+  task :clear_hits => :environment do 
+    r = Amazon::WebServices::MechanicalTurkRequester.new :Host => :Sandbox
+    hits = r.searchHITs({PageSize: 100})[:HIT]
+    if hits
+      hits.each{|h| r.disableHIT({HITId: h[:HITId]})}
+    end
+  end
+
+
 end
