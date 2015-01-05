@@ -40,12 +40,13 @@ module IterativeLearning
       expose :percent_test_for_training
       expose :generation_shared_values
       expose :is_mturk
+      expose :mturk_sandbox
       expose :mturk_title
       expose :mturk_description
       expose :mturk_keywords
       expose :mturk_award # USD
-      expose :mturk_time_to_complete
-      expose :mturk_time_to_expire
+      expose :mturk_duration
+      expose :mturk_lifetime
       expose :mturk_qualifications
       expose :conditions, using: IterativeLearning::Entities::Condition
       expose :frontend_config
