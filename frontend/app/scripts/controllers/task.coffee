@@ -22,11 +22,26 @@ angular.module('iterativeLearningApp')
       testing: []
     }
 
+    # stuff for mturk form
+    $scope.mturk = 
+      submit_action: $stateParams.turkSubmitTo + "/mturk/externalSubmit"
+      assignmentId: $stateParams.assignmentId
+
+    # has the data ben submitted?
+    $scope.submitted = false
+
+    # are we on mturk? 
+    $scope.task_is_mturk = ()->
+      !!$stateParams.assignmentId
+
     # returns true if this is an MTurk task/hit and
     # the HIT is being previewed, not yet assigned
     $scope.mturk_preview = ()->
       $stateParams.assignmentId == "ASSIGNMENT_ID_NOT_AVAILABLE"
 
+
+    $scope.mturk_sandbox = ()->
+      /sandbox/.test($stateParams.turkSubmitTo)
 
     # whether the task can be done, hasn't already been done
     $scope.task_is_doable = ()->
@@ -93,20 +108,21 @@ angular.module('iterativeLearningApp')
 
         $http.post(ilHost+"/task?key=#{$stateParams.key}", data)
           .then (ok)->
-            # submit to MTurk
-            if $stateParams.workerId and $stateParams.turkSubmitTo
-              data.assignmentId = $stateParams.assignmentId
-              $http({
-                method: 'POST',
-                url: $stateParams.turkSubmitTo + "/mturk/externalSubmit",
-                data: $.param(data),
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-              }).then(
-                (resp)->
-                  console.log "mturk OK"
-                ,(err)->
-                  console.log err
-              )
+            $scope.submitted = true
+            ## submit to MTurk
+            # if $stateParams.workerId and $stateParams.turkSubmitTo
+            #   data.assignmentId = $stateParams.assignmentId
+            #   $http({
+            #     method: 'POST',
+            #     url: $stateParams.turkSubmitTo + "/mturk/externalSubmit",
+            #     data: $.param(data),
+            #     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            #   }).then(
+            #     (resp)->
+            #       console.log "mturk OK"
+            #     ,(err)->
+            #       console.log err
+            #   )
 
 
           ,(err)->
