@@ -53,12 +53,16 @@ angular.module('iterativeLearningApp')
     # all responses collected?
     $scope.task_is_complete = (phase = null)->
       check = (_phase)-> 
-        complete = true
-        for vals in responses[_phase]
-          if vals.y == null
-            complete = false 
-            break
-        complete
+        try
+          # task responses present and initialized
+          if responses[_phase].length != task._start_values[_phase].length
+            return false
+          # responses not nil
+          for vals in responses[_phase]
+            return false if vals.y == null
+          return true
+        catch 
+          return false
 
       if !!phase
         return check(phase)
@@ -101,30 +105,11 @@ angular.module('iterativeLearningApp')
       if !$scope.mturk_preview() and $scope.task_is_complete()
         data = task: 
           response_values: responses
-
-        # include mturk worker id, if present
         if !!$stateParams.workerId
           data.task.mturk_worker_id = $stateParams.workerId
-
         $http.post(ilHost+"/task?key=#{$stateParams.key}", data)
           .then (ok)->
             $scope.submitted = data
-            ## submit to MTurk
-            # if $stateParams.workerId and $stateParams.turkSubmitTo
-            #   data.assignmentId = $stateParams.assignmentId
-            #   $http({
-            #     method: 'POST',
-            #     url: $stateParams.turkSubmitTo + "/mturk/externalSubmit",
-            #     data: $.param(data),
-            #     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            #   }).then(
-            #     (resp)->
-            #       console.log "mturk OK"
-            #     ,(err)->
-            #       console.log err
-            #   )
-
-
           ,(err)->
             console.log err
 
