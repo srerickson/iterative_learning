@@ -46,6 +46,11 @@ Create experiment config file from supplied sample
 $ cp config/experiments.sample.yml config/experiments.yml
 ```
 
+If you want to use Mechanical Turk to run the experiment, you will need enter your AWS credentials: 
+```
+$ ruby-aws
+```
+
 Build the experiment
 ```
 $ bundle exec rake il:build
@@ -70,5 +75,11 @@ http://localhost:3000/#/experiment?key=[EXPERIMENT_KEY]
 
 
 ## Configuration
-TK ...
+
+After modifying the config (`config/experiment.yml`), you need to rebuild the experiment:
+```
+$ bundle exec rake il:build
+```
+WARNING: this operation is descructive -- the existing experiment will be destoyed if it has the same name
+
 
