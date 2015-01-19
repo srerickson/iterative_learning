@@ -37,8 +37,8 @@ describe IterativeLearning::API do
       key = @task.jwt_key
       post "/task?key=#{key}", JSON.generate(@valid_data), { "CONTENT_TYPE" => "application/json" }
       expect(last_response.status).to eq(201)
+      expect(@task.reload.response_values.with_indifferent_access).to eq(@valid_data[:task][:response_values].with_indifferent_access)
     end
-
 
     it "it returns error if invalid key" do
       key = "wrong"
@@ -46,14 +46,12 @@ describe IterativeLearning::API do
       expect(last_response.status).to eq(500)
     end
 
-
     it "it returns error if invalid task data doesn't have right length" do
       key = @task.jwt_key
       post "/task?key=#{key}", JSON.generate(@invalid_data), { "CONTENT_TYPE" => "application/json" }
       expect(last_response.status).to eq(500)
-      expect(@task.response_values).to eq(nil)
+      expect(@task.reload.response_values).to eq(nil)
     end
-
 
   end
 
