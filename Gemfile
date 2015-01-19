@@ -15,9 +15,9 @@ gem "racksh"
 
 gem "ruby-aws"
 
-
 group :development do 
   gem "rerun"
   gem 'rspec', :require => 'spec'
+  gem 'rack-test'
   gem 'compass'
 end 
