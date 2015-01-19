@@ -8,6 +8,8 @@ ENV["BASE_URL"] ||= "https://il.thebig.computer"
 VERSION = '0.1'
 
 require 'rubygems'
+require 'bundler/setup'
+
 require 'grape'
 require 'grape-entity'
 require 'hashie_rails'
