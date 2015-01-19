@@ -2,8 +2,6 @@ require 'il/mturk'
 
 class Task < ActiveRecord::Base
 
-
-
   belongs_to :generation, inverse_of: :tasks
   validates_presence_of :generation
 
@@ -51,6 +49,7 @@ class Task < ActiveRecord::Base
     ENV["BASE_URL"] + "/#/task?key=#{jwt_key}"
   end
 
+  # return task's response fitness score (in relation to parent confition's target values)
   def response_fitness
     self.generation.chain.condition.fitness( self.response_values )
   end
@@ -72,7 +71,5 @@ class Task < ActiveRecord::Base
       requester.disableHIT({HITId: mturk_hit_id})
     end
   end
-
-
 
 end

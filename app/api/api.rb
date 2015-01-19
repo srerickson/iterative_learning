@@ -9,7 +9,7 @@ module IterativeLearning
 
     rescue_from :all do |e|
       Grape::API.logger.error "#{e.message}\n#{e.backtrace.join("\n")}"
-      raise e
+      Rack::Response.new([ e.message ], 500, { "Content-type" => "text/error" }).finish
     end
 
     after do 
@@ -56,12 +56,19 @@ module IterativeLearning
         requires :task
       end
       post do
-        puts params
         jwt = JWT.decode(params[:key], ENV["IL_SECRET"])
         task_id = jwt[0]['task_id']
         task = Task.find(task_id)
+
+        # sanity check the response values
+        # - response values should have measurable fitness
+        # - this will throw an error if response_values doesn't look right
+        # - request will abort (rescue_all)
+        task.generation.chain.condition.fitness( params[:task][:response_values] )
+
         task.update_attributes!(params[:task])
         task.update_experiment
+        
       end
 
 

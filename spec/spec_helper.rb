@@ -1,5 +1,6 @@
 $:.unshift("./")
 require 'environment.rb'
+require "rack/test"
 
 RSpec.configure do |config|
   config.before(:each) do
