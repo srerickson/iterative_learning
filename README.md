@@ -80,6 +80,6 @@ After modifying the config (`config/experiment.yml`), you need to rebuild the ex
 ```
 $ bundle exec rake il:build
 ```
-WARNING: this operation is descructive -- the existing experiment will be destoyed if it has the same name
+WARNING: this operation is destructive -- the existing experiment will be destoyed (if the name hasn't changed)
 
 See comments in [experiments.sample.yml](https://github.com/srerickson/iterative_learning/blob/master/config/experiments.sample.yml) for description of available config options.
