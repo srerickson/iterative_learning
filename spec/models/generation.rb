@@ -54,5 +54,12 @@ describe "Generation" do
     expect(@gen_1.best_task_response[0]).to eq({"x"=>1, "y"=>1})
   end
 
+  it "uses experiment's percent_test_for_training" do
+    @experiment.update_attributes(percent_test_for_training: 40)
+    @experiment.prepare
+    training_size = @gen_1.reload.start_values["training"].length.to_f
+    testing_size = @gen_1.reload.start_values["testing"].length.to_f
+    expect(training_size / testing_size).to eq(0.4)
+  end
 
 end

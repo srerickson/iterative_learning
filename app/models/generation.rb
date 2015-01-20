@@ -11,10 +11,9 @@ class Generation < ActiveRecord::Base
   # setup the generation's start values 
   # and prepare tasks
   def prepare(start_vals)
-    if self.start_values.empty?
-      self.start_values = IterativeLearning.training_test_split(start_vals)
-      self.save!
-    end
+    train_ratio = chain.condition.experiment.percent_test_for_training / 100.0
+    self.start_values = IterativeLearning.training_test_split(start_vals, train_ratio)
+    self.save!
     tasks.each(&:prepare)
   end
 
