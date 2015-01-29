@@ -2,8 +2,9 @@ require 'yaml'
 
 namespace :il do 
 
-  task :build => :environment do 
-    Experiment.build_from_config(ENV['EXP_FILE'] || 'config/experiments.yml')
+  task :build, [:config_file] => :environment do |t, args|
+    args.with_defaults(config_file: 'config/experiments.yml')
+    Experiment.build_from_config(args[:config_file])
   end
 
   task :list => :environment do 

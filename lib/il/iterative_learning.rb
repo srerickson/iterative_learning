@@ -15,8 +15,16 @@ module IterativeLearning
     @@TaskConditions[name] = method
   end
 
-  def self.build_condition(name,num,range=[1,num])
-    @@TaskConditions[name].call(num, range)
+  def self.build_condition(build_string)
+    # match things like NAME(ARGS)
+    if match = /^(.*)\((.*)\)$/.match(build_string)
+      name = match[1]
+      args = eval "[#{match[2]}]"
+    else
+      name = build_string
+      args = []
+    end
+    @@TaskConditions[name].call(*args)
   end
   
   # Partition values into training/testing sets

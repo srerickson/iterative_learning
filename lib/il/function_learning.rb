@@ -11,7 +11,7 @@ module IterativeLearning
       end
     end
 
-    def self.positive(num, range=[1,num])
+    def self.positive(num=1, range=[1,num])
       values = []
       (range[0]..range[1]).each do |i|
         x = i
@@ -21,7 +21,7 @@ module IterativeLearning
       values.spread(num)
     end
 
-    def self.negative(num, range=[1,num])
+    def self.negative(num=1, range=[1,num])
       values = []
       (range[0]..range[1]).each do |i|
         x = i
@@ -31,7 +31,7 @@ module IterativeLearning
       values.spread(num)
     end
 
-    def self.random(num, range=[1,num])
+    def self.random(num=1, range=[1,num])
       values = []
       (range[0]..range[1]).each do |i|
         x = i
@@ -41,7 +41,7 @@ module IterativeLearning
       values.spread(num)
     end
 
-    def self.nonlinear(num, range=[1,num])
+    def self.nonlinear(num=1, range=[1,num])
       values = []
       mid = (range[1]-range[0]+1)/2.0
       (range[0]..range[1]).each do |i|

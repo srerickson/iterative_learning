@@ -1,44 +1,30 @@
 test_experiment: 
   description: This is a test
 
+  # condition definitions (multiple)
   conditions:
     - name: positive
-      start_values: FUNC_POSITIVE
-      target_values: FUNC_POSITIVE
-      num_values: 100
-      range:
-        - 1
-        - 100
+      start_values: FUNC_POSITIVE(10,[1,10])
+      target_values: FUNC_POSITIVE(10,[1,10])
 
     - name: negative
-      start_values: FUNC_NEGATIVE
-      target_values: FUNC_NEGATIVE
-      num_values: 100
-      range:
-        - 1
-        - 100
+      start_values: FUNC_NEGATIVE(10,[1,10])
+      target_values: FUNC_NEGATIVE(10,[1,10])
 
     - name: nonlinear
-      start_values: FUNC_NONLINEAR
-      target_values: FUNC_NONLINEAR
-      num_values: 100
-      range:
-        - 1
-        - 100
+      start_values: FUNC_NONLINEAR(10,[1,10])
+      target_values: FUNC_NONLINEAR(10,[1,10])
 
     - name: random
-      start_values: FUNC_RANDOM
-      target_values: FUNC_RANDOM
-      num_values: 10
-      range:
-        - 1
-        - 100
+      start_values: FUNC_RANDOM(10,[1,10])
+      target_values: FUNC_RANDOM(10,[1,10])
+
 
   chains_per_condition: 2
   generations_per_chain: 3
   tasks_per_generation: 3
 
-  is_mturk: true
+  is_mturk: false
   mturk_sandbox: true
   mturk_title: This is a test
   mturk_description: etc etc etc

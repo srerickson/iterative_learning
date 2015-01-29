@@ -22,6 +22,16 @@ class Condition < ActiveRecord::Base
     IterativeLearning::FunctionLearning.sum_of_error(self.target_values, vals)
   end
 
+  def start_values=vals
+    vals = IterativeLearning.build_condition(vals) if vals.is_a? String
+    super(vals)
+  end
+
+  def target_values=vals
+    vals = IterativeLearning.build_condition(vals) if vals.is_a? String
+    super(vals)
+  end
+
   protected 
 
   def build_chains

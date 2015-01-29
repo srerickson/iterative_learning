@@ -36,17 +36,7 @@ class Experiment < ActiveRecord::Base
 
       # build conditions associations
       configs.delete('conditions').each do |cond_config|
-        condition = experiment.conditions.build
-        num_values = cond_config['num_values']
-        value_range = cond_config['range']
-        if value_range
-          condition.start_values = IterativeLearning.build_condition(cond_config['start_values'], num_values, value_range)
-          condition.target_values = IterativeLearning.build_condition(cond_config['target_values'], num_values, value_range)
-        else 
-          condition.start_values = IterativeLearning.build_condition(cond_config['start_values'], num_values)
-          condition.target_values = IterativeLearning.build_condition(cond_config['target_values'], num_values)
-        end
-        condition.name = cond_config['name']
+        condition = experiment.conditions.build(cond_config)
       end
       experiment.update_attributes!( configs )
       experiment.prepare
