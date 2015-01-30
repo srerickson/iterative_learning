@@ -75,9 +75,10 @@ http://localhost:3000/#/experiment?key=[EXPERIMENT_KEY]
 
 
 ## Configuration
-See comments in [experiments.sample.yml](https://github.com/srerickson/iterative_learning/blob/master/config/experiments.sample.yml) for description of available config options.
 
-After modifying `config/experiment.yml`, you need update the database:
+The default config file is `config/experiments.yml`. See comments in [experiments.sample.yml](https://github.com/srerickson/iterative_learning/blob/master/config/experiments.sample.yml) for description of available config options.
+
+After modifying `config/experiments.yml`, you need update the database:
 ```
 $ bundle exec rake il:rebuild
 ```
