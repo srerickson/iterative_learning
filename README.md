@@ -76,10 +76,23 @@ http://localhost:3000/#/experiment?key=[EXPERIMENT_KEY]
 
 ## Configuration
 
-After modifying the config (`config/experiment.yml`), you need to rebuild the experiment:
-```
-$ bundle exec rake il:build
-```
-WARNING: this operation is destructive -- the existing experiment will be destoyed (if the name hasn't changed)
+The default config file is `config/experiments.yml`. See comments in [experiments.sample.yml](https://github.com/srerickson/iterative_learning/blob/master/config/experiments.sample.yml) for description of available config options.
 
-See comments in [experiments.sample.yml](https://github.com/srerickson/iterative_learning/blob/master/config/experiments.sample.yml) for description of available config options.
+After modifying `config/experiments.yml`, you need update the database:
+```
+$ bundle exec rake il:rebuild
+```
+THIS IS DESTRUCTIVE -- the existing experiments will be removed
+
+To selectively rebuild specific experiments: 
+```
+$ bundle exec rake il:rebuild[experiment_name]
+```
+
+To remove an experiment from the database:
+```
+$ bundle exec rake il:remove[experiment_name]
+```
+
+
+
