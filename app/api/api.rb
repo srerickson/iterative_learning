@@ -6,14 +6,15 @@ module IterativeLearning
   class API < Grape::API
 
     format :json
+    logger Logger.new(File.expand_path("../../../access.log", __FILE__))
 
     rescue_from :all do |e|
-      Grape::API.logger.error "#{e.message}\n#{e.backtrace.join("\n")}"
+      API.logger.error "#{e.message}\n#{e.backtrace.join("\n")}"
       Rack::Response.new([ e.message ], 500, { "Content-type" => "text/error" }).finish
     end
 
-    after do 
-      Grape::API.logger.info({
+    after do
+      API.logger.info({
         short_message: "[#{status}] #{request.request_method} #{request.path}",
         code: status,
         ip: request.ip,
