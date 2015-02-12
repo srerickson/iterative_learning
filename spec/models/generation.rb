@@ -2,13 +2,13 @@ require "spec_helper"
 
 describe "Generation" do
   before :each do
-
+    rebuild_experiment
+    @experiment = Experiment.first
     @gen_1 = @experiment.conditions.first.chains.first.generations[0]
     @gen_2 = @experiment.conditions.first.chains.first.generations[1]
     @gen_3 = @experiment.conditions.first.chains.first.generations[2]
-
   end
-
+  
   it "should be valid with correct values" do
     expect(@gen_1).to be_valid
   end
@@ -37,7 +37,7 @@ describe "Generation" do
     expect(@gen_2.start_values).to be_empty
 
     @gen_1.tasks.each do |t|
-      t.update_attributes(response_values: @sample_positive )
+      t.update_attributes(response_values: sample_positive )
       t.update_experiment
     end
     
@@ -49,7 +49,7 @@ describe "Generation" do
 
   it "calculates best task response" do
     @gen_1.tasks.each_with_index do |t,i|
-      t.update_attribute(:response_values, @sample_positive.map{|val| {x:val[:x],y:val[:y]+i } }) 
+      t.update_attribute(:response_values, sample_positive.map{|val| {x:val[:x],y:val[:y]+i } }) 
     end
     expect(@gen_1.best_task_response[0]).to eq({"x"=>1, "y"=>1})
   end

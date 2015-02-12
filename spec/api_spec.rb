@@ -11,6 +11,8 @@ describe IterativeLearning::API do
 
 
   before :each do
+    rebuild_experiment
+    @experiment = Experiment.first
     @task = @experiment.conditions.first.chains.first.generations.first.tasks.first
     @valid_data = {
       task: {
