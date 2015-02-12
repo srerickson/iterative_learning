@@ -16,5 +16,10 @@ describe "Task" do
     expect(@task.response_fitness).to be_an(Integer)
   end
 
+  it "should call generation's update_experiment when update_experiment is called" do
+    expect(@task.generation).to receive(:update_experiment).with(@task)
+    @task.update_experiment
+  end
+
 
 end

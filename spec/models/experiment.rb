@@ -11,5 +11,9 @@ describe "Experiment" do
     expect(@experiment).to be_valid
   end
 
+  it "should call prepare on all conditions when prepare is called" do
+    @experiment.conditions.each{ |c| expect(c).to receive(:prepare) }
+    @experiment.prepare
+  end
 
 end

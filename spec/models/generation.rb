@@ -62,4 +62,15 @@ describe "Generation" do
     expect(training_size / testing_size).to eq(0.4)
   end
 
+
+  it "should call chains's update_experiment when update_experiment is called" do
+    expect(@gen_1.chain).to receive(:update_experiment).with(123)
+    @gen_1.update_experiment(123)
+  end
+
+
+  it "should call prepare on all tasks when prepare is called" do
+    @gen_1.tasks.each{ |t| expect(t).to receive(:prepare) }
+    @gen_1.prepare(sample_positive)
+  end
 end

@@ -9,9 +9,12 @@ class Chain < ActiveRecord::Base
   def prepare 
     # prepare the first genertion
     # QUESTION: partition here or later?
-    generations.first.prepare(condition.start_values)
+    first_generation.prepare(condition.start_values)
   end
 
+  def first_generation
+    @first_generation ||= generations.first
+  end
 
   def update_experiment(task)
     condition.update_experiment(task)
