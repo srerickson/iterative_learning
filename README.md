@@ -41,10 +41,15 @@ Setup the sqlite database (`experiment_data.db`)
 $ bundle exec rake db:migrate
 ```
 
-Create experiment config file from supplied sample
+Create experiment & settings config files from supplied sample
 ```
 $ cp config/experiments.sample.yml config/experiments.yml
+$ cp config/settings.sample.yml config/settings.yml
+
 ```
+
+You change the 'secret' paramater in config/settings.yml
+
 
 If you want to use Mechanical Turk to run the experiment, you will need enter your AWS credentials: 
 ```

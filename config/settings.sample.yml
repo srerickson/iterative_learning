@@ -1,0 +1,22 @@
+environment: production # <-- use this to set the environment
+secret: CHANGME
+
+# Environment-specific settings
+
+production:
+  base_url: https://il.thebig.computer
+  database:
+    adapter: sqlite3
+    database: experiment_data_production.db
+
+development:
+  base_url: https://localhost:3000
+  database:
+    adapter: sqlite3
+    database: experiment_data_development.db
+
+test:
+  base_url: https://localhost:3000
+  database:
+    adapter: sqlite3
+    database: experiment_data_test.db

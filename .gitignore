@@ -1,6 +1,7 @@
 *.DS_Store
+*.db
 config/experiments.yml
-experiment_data.db
+config/settings.yml
 tmp/*
 ruby-aws.log
 access.log
