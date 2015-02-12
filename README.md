@@ -48,8 +48,7 @@ $ cp config/settings.sample.yml config/settings.yml
 
 ```
 
-You change the 'secret' paramater in config/settings.yml
-
+You should change the `secret` setting in config/settings.yml to something unique to help secure your application. 
 
 If you want to use Mechanical Turk to run the experiment, you will need enter your AWS credentials: 
 ```
