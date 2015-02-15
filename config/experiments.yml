@@ -57,10 +57,57 @@ round1_feb2015:
           <li>a slider next to the vertical bar</li>
         </ul>
         like this:
-        <img src="/images/fig1.png"/>
+        <img src="/images/fig1.png" style="width:100%;border:1px solid gray;"/>
       </p>
-
-
+      <p>
+        Any % of the horizontal bar, from 1% to 100%, can be filled in blue. 
+        In the figure above, approximately 80% is filled in blue.
+      </p>
+      <p>
+        You must drag the slider next to the vertical bar, on the right. 
+        As you do, that bar will fill with red.
+      </p>
+      <p>
+        For each amount of blue in the horizontal bar, there is a correct amount of red 
+        in the vertical bar. At the beginning of the experiment, you will not know what 
+        the correct amounts are, so you must guess. Drag the slider to any part of the 
+        vertical bar. Like this:
+        <img src="/images/fig2.png" style="width:100%;border:1px solid gray;"/>
+      </p>
+      <p>
+        When you have done this, click ‘Next’. After you have clicked ‘Next’, 
+        another vertical bar will appear, partly filled in yellow. This indicates 
+        the correct amount of the vertical bar that should be filled in, given the 
+        amount of the horizontal bar that is filled in. Like this:
+        <img src="/images/fig3.png" style="width:100%;border:1px solid gray;"/>
+      </p>
+      <p>
+        If it was incorrect (as in the image above), the word ‘Incorrect’ will appear 
+        on the screen. You must now drag the slider to the same level as the yellow
+        bar (or close to it). You can then click ‘Next’ to move on to the next round.
+        If your guess was correct, or close to correct, the word ‘Correct!’ will appear 
+        on the screen. You can now click ‘Next’, and move on to the next round.
+      </p>
+      <p>
+        There are 50 rounds in the Training Phase, each with a different amount of 
+        the blue bar filled in. For each amount of blue that is filled, you should 
+        try to remember how much of the red bar should be filled.
+      </p>
+      <p>
+        Once you have completed the Training Phase, you will move on to the Testing Phase.
+      </p>
+      <p>
+        The Testing Phase is the same as the Training Phase, except that here there is 
+        no feedback. In other words, there will be no yellow bar, and no noises. 
+        Instead, after you click ‘Next’, you will move straight on to the next round. 
+        You will not be told if you were correct or not.
+      </p>
+      <p>
+        There are 100 rounds in the Testing Phase.
+      </p>
+      <p>
+        Once you have completed the Testing Phase, click ‘Submit’ to complete the experiment. Many thanks.
+      </p>
 
     next_button_help_text: Adjust the vertical slider and click Next
     training_correct_text: <b>Correct!</b>
