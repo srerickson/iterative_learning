@@ -4,20 +4,20 @@ round1_feb2015:
   # condition definitions (multiple)
   conditions:
     - name: positive
-      start_values: FUNC_POSITIVE(10,[1,10]) # 10 values between 1 and 10 (inclusive)
-      target_values: FUNC_POSITIVE(10,[1,10])
+      start_values: FUNC_POSITIVE(100,[1,100]) # 10 values between 1 and 10 (inclusive)
+      target_values: FUNC_POSITIVE(100,[1,100])
 
     - name: negative
-      start_values: FUNC_NEGATIVE(10,[1,10])
-      target_values: FUNC_NEGATIVE(10,[1,10])
+      start_values: FUNC_NEGATIVE(100,[1,100])
+      target_values: FUNC_NEGATIVE(100,[1,100])
 
     - name: nonlinear
-      start_values: FUNC_NONLINEAR(10,[1,10])
-      target_values: FUNC_NONLINEAR(10,[1,10])
+      start_values: FUNC_NONLINEAR(100,[1,100])
+      target_values: FUNC_NONLINEAR(100,[1,100])
 
     - name: random
-      start_values: FUNC_RANDOM(10,[1,10])
-      target_values: FUNC_RANDOM(10,[1,10])
+      start_values: FUNC_RANDOM(100,[1,100])
+      target_values: FUNC_RANDOM(100,[1,100])
 
   chains_per_condition: 2   # Number of chains per condition
   generations_per_chain: 3  # Number of generation per chain
