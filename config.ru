@@ -14,7 +14,8 @@ end
 use Rack::Static, urls: [
  "/scripts",
  "/styles",
- "/views"
+ "/views",
+ "/images"
 ], root: "frontend/dist", index: 'index.html'
 
 
