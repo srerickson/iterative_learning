@@ -1,7 +1,9 @@
 *.DS_Store
 *.db
-config/experiments.yml
 config/settings.yml
+experiments/*
+!experiments/example_basic.yml
+!experiments/example_mturk.yml
 tmp/*
 ruby-aws.log
 access.log
