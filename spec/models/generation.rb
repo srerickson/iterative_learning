@@ -2,8 +2,7 @@ require "spec_helper"
 
 describe "Generation" do
   before :each do
-    rebuild_experiment
-    @experiment = Experiment.first
+    @experiment = rebuild_experiment("spec_experiment1")
     @gen_1 = @experiment.conditions.first.chains.first.generations[0]
     @gen_2 = @experiment.conditions.first.chains.first.generations[1]
     @gen_3 = @experiment.conditions.first.chains.first.generations[2]

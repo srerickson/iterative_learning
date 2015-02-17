@@ -2,8 +2,7 @@ require "spec_helper"
 
 describe "Condition" do
   before :each do
-    rebuild_experiment
-    @experiment = Experiment.first
+    @experiment = rebuild_experiment("spec_experiment1")
     @condition = @experiment.conditions.first
   end
 

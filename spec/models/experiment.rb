@@ -3,8 +3,7 @@ require "spec_helper"
 describe "Experiment" do
   
   before :each do
-    rebuild_experiment
-    @experiment = Experiment.first
+    @experiment = rebuild_experiment("spec_experiment1")
   end
 
   it "should be valid with correct values" do

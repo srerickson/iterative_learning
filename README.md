@@ -41,9 +41,8 @@ Setup the sqlite database (`experiment_data.db`)
 $ bundle exec rake db:migrate
 ```
 
-Create experiment & settings config files from supplied sample
+Create settings config files from supplied sample
 ```
-$ cp config/experiments.sample.yml config/experiments.yml
 $ cp config/settings.sample.yml config/settings.yml
 
 ```
@@ -55,16 +54,21 @@ If you want to use Mechanical Turk to run the experiment, you will need enter yo
 $ ruby-aws
 ```
 
-Build the experiment
+Build the provided sample experiment
 ```
-$ bundle exec rake il:build
+$ bundle exec rake il:build[example_basic]
 ```
 
 Make sure the experiment was successfully generated:
 ```
 $ bundle exec rake il:list
 > loading environment ... 
-> test_experiment	| eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9... [<- Note your experiment key]
+> Found 1 experiment(s)
+> ------------------------------------------
+> name: example_basic
+> description: This is an example experiment.
+> access key: eyJ0eXAiOiJKV1Qi.... 
+------------------------------------------
 ```
 
 Start the server:
@@ -74,28 +78,32 @@ $ bundle exec thin start --port 3000 -R config.ru
 
 Confirm the experiment is running by pointing your browser to: 
 ```
-http://localhost:3000/#/experiment?key=[EXPERIMENT_KEY]
+http://localhost:3000/#/experiment?key=[ACCESS KEY]
 ```
+(Use the access key listed from the `rake il:list` command)
 
 
 ## Configuration
 
-The default config file is `config/experiments.yml`. See comments in [experiments.sample.yml](https://github.com/srerickson/iterative_learning/blob/master/config/experiments.sample.yml) for description of available config options.
+Experiments configuration files are stored in the `experiments` folder. Several examples are provided.
 
-After modifying `config/experiments.yml`, you need update the database:
+To create a new experiment, copy one the provided examples, and edit the file as needed.
 ```
-$ bundle exec rake il:rebuild
+$ cp experiments/example_basic.yml experiments/your_new_experiment.yml
 ```
-THIS IS DESTRUCTIVE -- the existing experiments will be removed
 
-To selectively rebuild specific experiments: 
+Then build it: 
 ```
-$ bundle exec rake il:rebuild[experiment_name]
+$ bundle exec rake il:build[your_new_experiment]
 ```
+
+If you make changes to the experiment configuration, you will need to rebuild it to make the changes live. Any collected data will be lost!
 
 To remove an experiment from the database:
 ```
-$ bundle exec rake il:remove[experiment_name]
+$ bundle exec rake il:remove[your_new_experiment]
+$ bundle exec rake il:build[your_new_experiment]
+
 ```
 
 

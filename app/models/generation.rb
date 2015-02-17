@@ -71,6 +71,7 @@ class Generation < ActiveRecord::Base
 
   # Returns the task reponse that is 
   # the 'best' among the child tasks
+  #
   def best_task_response
     if complete?
       best_score = Float::INFINITY

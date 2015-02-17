@@ -1,0 +1,23 @@
+description: This is a test
+
+conditions:
+  - name: positive
+    start_values: FUNC_POSITIVE(10,[1,10])
+    target_values: FUNC_POSITIVE(10,[1,10])
+
+  - name: negative
+    start_values: FUNC_NEGATIVE(10,[1,10])
+    target_values: FUNC_NEGATIVE(10,[1,10])
+
+  - name: nonlinear
+    start_values: FUNC_NONLINEAR(10,[1,10])
+    target_values: FUNC_NONLINEAR(10,[1,10])
+
+  - name: random
+    start_values: FUNC_RANDOM(10,[1,10])
+    target_values: FUNC_RANDOM(10,[1,10])
+
+chains_per_condition: 2
+generations_per_chain: 2
+tasks_per_generation: 3
+is_mturk: false
