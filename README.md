@@ -85,9 +85,9 @@ http://localhost:3000/#/experiment?key=[ACCESS KEY]
 
 ## Configuration
 
-Experiments configuration files are stored in the `experiments` folder. Several examples are provided.
+Experiment configuration files are stored in the `experiments/` folder. Several examples are provided.
 
-To create a new experiment, copy one the provided examples, and edit the file as needed.
+To create a new experiment, copy one the provided examples and edit as needed.
 ```
 $ cp experiments/example_basic.yml experiments/your_new_experiment.yml
 ```
@@ -97,13 +97,16 @@ Then build it:
 $ bundle exec rake il:build[your_new_experiment]
 ```
 
-If you make changes to the experiment configuration, you will need to rebuild it to make the changes live. Any collected data will be lost!
+If you make changes to the experiment configuration file, you will need to rebuild the experiment to make the changes live. Any collected data will be lost!
+
+To list all built experiments: 
+```
+$ bundle exect rake il:list
+```
 
 To remove an experiment from the database:
 ```
 $ bundle exec rake il:remove[your_new_experiment]
-$ bundle exec rake il:build[your_new_experiment]
-
 ```
 
 
