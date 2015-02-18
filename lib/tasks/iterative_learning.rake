@@ -2,7 +2,6 @@ require 'yaml'
 
 namespace :il do 
 
-
   def create_experiment(config)
     experiment = Experiment.new()
     config.delete('conditions').each do |cond_config|
@@ -13,53 +12,55 @@ namespace :il do
   end
 
 
-  task :build, [:only_experiment, :config_file] => :environment do |t, args|
-    args.with_defaults(config_file: 'config/experiments.yml')
-    experiment_configs = YAML.load_file(args[:config_file])
-    experiment_configs.each_pair do |name, configs| 
-      next if args[:only_experiment].present? and name != args[:only_experiment]
-      if Experiment.where({name: name}).size > 0
-        puts "skipping: #{name} (already built)"
+  task :build, [:config_file] => :environment do |t, args|
+    begin
+      # Argument can be:
+      # - path to YML file
+      # - basename of YML file in experiments folder
+      if args[:config_file] =~ /^.*\.yml$/
+        config = YAML.load_file(args[:config_file])
       else
-        puts "building: #{name} ..."
-        configs['name'] = name
-        create_experiment(configs)
+        config = YAML.load_file("experiments/#{args[:config_file]}.yml")
       end
+      config['name'] = File.basename(args[:config_file], '.yml')
+      if Experiment.where({name: config['name']}).size > 0
+        puts "skipping: #{config['name']} (already built)"
+      else
+        puts "building: #{config['name']} ..."
+        create_experiment(config)
+        puts "done"
+      end
+    rescue StandardError => e
+      puts "Error: #{e.message}"
     end
-    puts "done"
   end
 
 
-  task :rebuild, [:only_experiment, :config_file] => :environment do |t, args|
-    args.with_defaults(config_file: 'config/experiments.yml')
-    experiment_configs = YAML.load_file(args[:config_file])
-    experiment_configs.each_pair do |name, configs|
-      next if args[:only_experiment].present? and name != args[:only_experiment]
-      if old_experiment = Experiment.where(name: name).first
-        puts "removing: #{old_experiment.name}"
-        old_experiment.destroy
+  task :remove, [:name] => :environment do |t,args|
+    begin 
+      if experiment = Experiment.where(name: args[:name]).first
+        puts "removing: #{experiment.name}"
+        experiment.destroy
+        puts "done"
+      else
+        puts "no experiment with that name"
       end
-      puts "building #{name}"
-      configs['name'] = name
-      create_experiment(configs)
+    rescue StandardError => e
+      puts "Error: #{e.message}"
     end
-    puts "done"
-  end
-
-
-  task :remove, [:only_experiment] => :environment do |t,args|
-    if experiment = Experiment.where(name: args[:only_experiment]).first
-      puts "removing: #{experiment.name}"
-      experiment.destroy
-    end
-    puts "done"
   end
 
 
   task :list => :environment do 
-    Experiment.all.each do |e|
-      puts "#{e.name}\t| #{e.jwt_key}"
+    experiments = Experiment.all
+    puts "Found #{experiments.count} experiment(s)"
+    experiments.each do |e|
+      puts "------------------------------------------"
+      puts "name: #{e.name}"
+      puts "description: #{e.description}"
+      puts "access key: #{e.jwt_key}"
     end
+    puts "------------------------------------------"
   end
 
   

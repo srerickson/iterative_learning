@@ -3,8 +3,7 @@ require "spec_helper"
 describe "Chain" do
   
   before :each do
-    rebuild_experiment
-    @experiment = Experiment.first
+    @experiment = rebuild_experiment("spec_experiment1")
     @chain = @experiment.conditions.first.chains.first
   end
 

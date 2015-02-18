@@ -2,8 +2,7 @@ require "spec_helper"
 
 describe "Task" do
   before :each do
-    rebuild_experiment
-    @experiment = Experiment.first
+    @experiment = rebuild_experiment("spec_experiment1")
     @task = @experiment.conditions.first.chains.first.generations.first.tasks.first
   end
 

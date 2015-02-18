@@ -1,23 +1,28 @@
 
-<div ng-class="{hidden: !submitted}">
-  Thanks!
-</div>
+<div class="intro_text_wrapper">
 
 
-<div ng-show="task_is_mturk()">
-  <div ng-show="mturk_sandbox()">
-    <form action="https://workersandbox.mturk.com/mturk/externalSubmit" method="post">
-      <input type="hidden" name="assignmentId" value="{{mturk.assignmentId}}"></input>
-      <input type="hidden" name="data" value="{{submitted}}"></input>
-      <input type="submit" class="btn btn-primary" value="Submit HIT (sandbox)"></input>
-    </form>
+  <div ng-class="{hidden: !submitted}">
+    <h4>Thanks!</h4>
+    <p>Your results have been submitted.</p>
   </div>
-  <div ng-show="!mturk_sandbox()">
-    <form action="https://www.mturk.com/mturk/externalSubmit" method="post">
-      <input type="hidden" name="assignmentId" value="{{mturk.assignmentId}}"></input>
-      <input type="hidden" name="data" value="{{submitted}}"></input>
-      <input type="submit" class="btn btn-primary" value="Submit HIT"></input>
-    </form>
+
+  <div ng-show="task_is_mturk()">
+    <div ng-show="mturk_sandbox()">
+      <form action="https://workersandbox.mturk.com/mturk/externalSubmit" method="post">
+        <input type="hidden" name="assignmentId" value="{{mturk.assignmentId}}"></input>
+        <input type="hidden" name="data" value="{{submitted}}"></input>
+        <input type="submit" class="btn btn-primary" value="Submit HIT (sandbox)"></input>
+      </form>
+    </div>
+    <div ng-show="!mturk_sandbox()">
+      <form action="https://www.mturk.com/mturk/externalSubmit" method="post">
+        <input type="hidden" name="assignmentId" value="{{mturk.assignmentId}}"></input>
+        <input type="hidden" name="data" value="{{submitted}}"></input>
+        <input type="submit" class="btn btn-primary" value="Submit HIT"></input>
+      </form>
+    </div>
+
   </div>
 
 </div>
