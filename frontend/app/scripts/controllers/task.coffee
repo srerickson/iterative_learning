@@ -138,7 +138,7 @@ angular.module('iterativeLearningApp')
     
     # feedback delay in milliseconds
     try
-      delay = $scope.messages.feedback_delay
+      delay = $scope.messages.feedback_delay || 1500
     catch
       delay = 1500
 
