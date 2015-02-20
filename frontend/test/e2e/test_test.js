@@ -11,6 +11,10 @@ describe('iterative learning', function() {
       var condition = experiment.conditions[i]
       for(j in condition.chains){
         var chain = condition.chains[j]
+
+        var training_length = chain.generations[0].tasks[0]._start_values.training.length
+        var testing_length  = chain.generations[0].tasks[0]._start_values.testing.length
+
         for(k in chain.generations){
           var generation = chain.generations[k]
           for(l in generation.tasks){
@@ -24,11 +28,10 @@ describe('iterative learning', function() {
             element(by.css("[ui-sref='task.training']")).click()
 
             // Testing Page
-            expect(element(by.css('.feedback .fill')).isPresent()).toBe(true)
             browser.waitForAngular();
+            expect(element(by.css('.feedback .fill')).isPresent()).toBe(true)
 
-            for(val in task._start_values.training){
-
+            for(m=0;m<training_length;++m){
               // A guess .. 
               browser.driver.actions()
                 .mouseDown(element(by.css(".ui-slider-handle")))
@@ -54,12 +57,13 @@ describe('iterative learning', function() {
             }
 
             // Training Intro
+            browser.waitForAngular();
             expect(element(by.css('[ui-sref="task.testing"]')).isPresent()).toBe(true)
             element(by.css('[ui-sref="task.testing"]')).click()
 
             // Testing Phase
             browser.waitForAngular();
-            for(val in task._start_values.testing){
+            for(m=0;m<testing_length;++m){
               guess = Math.ceil(Math.random() * 350)
               browser.driver.actions()
                 .mouseDown(element(by.css(".ui-slider-handle")))
@@ -67,41 +71,17 @@ describe('iterative learning', function() {
                 .mouseUp()
                 .perform()
               element(by.css('[ng-click="next()"]')).click()
+              browser.sleep(300)
             }
-
 
             // Final
             expect(element(by.css('h4')).isDisplayed()).toBeTruthy();
-
 
           }
         }
       }
 
     }
-
-
-    // browser.get('http://localhost:3000/#/experiment?key=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHBlcmltZW50X25hbWUiOiJyb3VuZDFfZmViMjAxNSJ9.P8h4khtwcA9Yd8rLDlq8A85ZaRcnH1Pp55uw2_KjeQI');
-
-
-    // var conditions = element.all(by.repeater("condition in experiment.conditions"));
-    // expect(conditions.count()).toEqual(4);
-    // conditions.each(function(condition){
-      
-    //   var chains = condition.all(by.repeater("chain in condition.chains"))
-    //   expect(chains.count()).toEqual(2)
-    //   chains.each(function(chain){
-
-    //     var generations = chain.all(by.repeater("generation in chain.generations"))
-    //     expect(generations.count()).toEqual(3)
-    //     generations.each(function(generation){
-
-    //       var tasks = generation.all(by.repeater("task in generation.tasks"))
-    //       expect(tasks.count()).toEqual(3)
-
-    //     })
-    //   })
-    // })
 
   });
 });
