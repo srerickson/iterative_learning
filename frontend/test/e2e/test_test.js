@@ -88,14 +88,13 @@ describe('iterative learning', function() {
               // Testing Phase
               waitForUrlToChangeTo(/testing/)
               for(m=0;m<testing_length;++m){
-                guess = Math.ceil(Math.random() * 350)
+                guess = Math.ceil(Math.random() * 345) + 5
                 browser.driver.actions()
                   .mouseDown(element(by.css(".ui-slider-handle")))
                   .mouseMove({x:0, y: guess*-1})
                   .mouseUp()
                   .perform()
                 element(by.css('[ng-click="next()"]')).click()
-                browser.sleep(300)
               }
 
               // Final
