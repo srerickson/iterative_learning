@@ -135,8 +135,12 @@ angular.module('iterativeLearningApp')
       show_feedback: false
       transitioning: false
       guess: null
-
-    delay = 1500
+    
+    # feedback delay in milliseconds
+    try
+      delay = $scope.messages.feedback_delay
+    catch
+      delay = 1500
 
     $scope.feedback_message = $scope.messages.next_button_help_text
 

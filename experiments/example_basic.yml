@@ -41,6 +41,7 @@ percent_test_for_training: 50 # percent of values to use for training (chosen ra
 # Options for experiment interface
 #
 frontend_config:
+  feedback_delay: 10 # feedback delay in millisecods
   intro_help_text: |
     <p>
       <b> Instructions go here</b>
