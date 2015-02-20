@@ -4,3 +4,5 @@ config/settings.yml
 tmp/*
 ruby-aws.log
 access.log
+\#*#
+*~
