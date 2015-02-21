@@ -87,11 +87,12 @@ frontend_config:
       <img src="/images/fig3.png" class="col-md-12 well"/>
     </p>
     <p>
-      If it was incorrect (as in the image above), the word ‘Incorrect’ will appear
-      on the screen. You must now drag the slider to the same level as the yellow
-      bar (or close to it). You can then click ‘Next’ to move on to the next round.
-      If your guess was correct, or close to correct, the word ‘Correct!’ will appear
-      on the screen. You can now click ‘Next’, and move on to the next round.
+      If the yellow and red bars are different (as in the image above), the word
+      ‘Incorrect’ will appear on the screen. You must now drag the slider to the
+      same level as the yellow bar (or close to it). You can then click ‘Next’ to
+      move on to the next round. Once the yellow and red bars are the same, or very
+      close, the word ‘Correct!’ will appear on the screen. After a short delay,
+      you will then proceed to the next round.
     </p>
     <p>
       There are 50 rounds in the Training Phase, each with a different amount of
@@ -113,7 +114,11 @@ frontend_config:
     <p>
       Once you have completed the Testing Phase, click ‘Submit’ to complete the experiment.
     </p>
+    <p class="alert alert-danger strong">
+      Do not press the back button, or refresh the page, during the experiment!
+    </p>
     <p>
+
       <b>Many thanks.</b>
     </p>
 
