@@ -54,6 +54,17 @@ describe IterativeLearning::API do
       expect(@task.reload.response_values).to eq(nil)
     end
 
+
+    it "returns error if the task has already been completed" do 
+      key = @task.jwt_key
+      post "/task?key=#{key}", JSON.generate(@valid_data), { "CONTENT_TYPE" => "application/json" }
+      expect(last_response.status).to eq(201)
+
+      post "/task?key=#{key}", JSON.generate(@valid_data), { "CONTENT_TYPE" => "application/json" }
+      expect(last_response.status).to eq(500)
+
+    end
+
   end
 
 end

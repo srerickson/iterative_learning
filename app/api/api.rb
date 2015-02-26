@@ -61,6 +61,10 @@ module IterativeLearning
         task_id = jwt[0]['task_id']
         task = Task.find(task_id)
 
+        # error if the task is already complete
+        # (we don't want to overwrite the data)
+        error!('task is already complete', 500) if task.complete? 
+
         # sanity check the response values
         # - response values should have measurable fitness
         # - this will throw an error if response_values doesn't look right
