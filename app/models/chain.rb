@@ -20,6 +20,19 @@ class Chain < ActiveRecord::Base
     condition.update_experiment(task)
   end
 
+  # Make sure the start_values for each generation are correct
+  def integrity_check
+    start_values = condition.start_values
+    generations.each do |g|
+       # FIXME -- use the registered fitness function
+      if IterativeLearning::FunctionLearning.sum_of_error(g.start_values, start_values) != 0
+        return false
+      end
+      start_values = g.best_task_response
+    end
+    return true
+  end
+
   protected 
 
   def build_generations
