@@ -69,9 +69,6 @@ module IterativeLearning
     IterativeLearning.register_condition_builder('FUNC_RANDOM', self.method(:random))
     IterativeLearning.register_condition_builder('FUNC_VSHAPE',self.method(:v_shape))
     IterativeLearning.register_condition_builder('FUNC_NONLINEAR',self.method(:nonlinear))
-    IterativeLearning.register_condition_builder('FUNC_VSHAPE',self.method(:v_shape))
-
-
 
     # Returns the sum of difference between test and target.
     # test & target may be either arrays of objects with 'x','y' keys
