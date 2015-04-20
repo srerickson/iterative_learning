@@ -31,6 +31,17 @@ module IterativeLearning
       values.spread(num)
     end
 
+    def self.v_shape(num=1, range=[1,num])
+      values = []
+      # half = ((range[1]-range[0])/2.0).floor
+      (range[0]..range[1]).each do |i|
+        x = i
+        y = (range[1]+1-i*2).abs
+        values.push({x: x, y: y})
+      end
+      values.spread(num)
+    end
+
     def self.random(num=1, range=[1,num])
       values = []
       (range[0]..range[1]).each do |i|
@@ -56,7 +67,10 @@ module IterativeLearning
     IterativeLearning.register_condition_builder('FUNC_POSITIVE', self.method(:positive))
     IterativeLearning.register_condition_builder('FUNC_NEGATIVE', self.method(:negative))
     IterativeLearning.register_condition_builder('FUNC_RANDOM', self.method(:random))
+    IterativeLearning.register_condition_builder('FUNC_VSHAPE',self.method(:v_shape))
     IterativeLearning.register_condition_builder('FUNC_NONLINEAR',self.method(:nonlinear))
+    IterativeLearning.register_condition_builder('FUNC_VSHAPE',self.method(:v_shape))
+
 
 
     # Returns the sum of difference between test and target.
