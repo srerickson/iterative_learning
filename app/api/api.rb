@@ -69,7 +69,7 @@ module IterativeLearning
         # - response values should have measurable fitness
         # - this will throw an error if response_values doesn't look right
         # - request will abort (rescue_all)
-        task.generation.chain.condition.fitness( params[:task][:response_values] )
+        task.generation.chain.fitness( params[:task][:response_values] )
 
         task.update_attributes!(params[:task])
         task.update_experiment

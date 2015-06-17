@@ -49,9 +49,8 @@ class Task < ActiveRecord::Base
     ENV["BASE_URL"] + "/#/task?key=#{jwt_key}"
   end
 
-  # return task's response fitness score (in relation to parent confition's target values)
   def response_fitness
-    self.generation.chain.condition.fitness( self.response_values )
+    self.generation.chain.fitness( self.response_values )
   end
 
   def experiment

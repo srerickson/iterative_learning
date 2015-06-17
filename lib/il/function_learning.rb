@@ -46,7 +46,7 @@ module IterativeLearning
       values = []
       (range[0]..range[1]).each do |i|
         x = i
-        y = Random.new(seed + i).rand(range[0]..range[1])
+        y = Random.new(seed**(i+1)).rand(range[0]..range[1])
         values.push({x: x, y: y})
       end
       values.spread(num)

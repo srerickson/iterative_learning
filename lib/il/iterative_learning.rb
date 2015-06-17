@@ -15,11 +15,12 @@ module IterativeLearning
     @@TaskConditions[name] = method
   end
 
-  def self.build_condition(build_string)
+  def self.build_condition(build_string, scope=nil)
     # match things like NAME(ARGS)
     if match = /^(.*)\((.*)\)$/.match(build_string)
       name = match[1]
-      args = eval "[#{match[2]}]"
+      eval_build_string = Proc.new{|scope, expr| eval "[#{expr}]"}
+      args = eval_build_string.call(scope, match[2])
     else
       name = build_string
       args = []

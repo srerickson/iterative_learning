@@ -12,12 +12,14 @@ conditions:
     target_values: FUNC_NEGATIVE(10,[1,10])
 
   - name: nonlinear
-    start_values: FUNC_NONLINEAR(10,[1,10])
-    target_values: FUNC_NONLINEAR(10,[1,10])
+    start_values: FUNC_RANDOM(100,[1,100], 1234)
+    target_values: FUNC_RANDOM(100,[1,100], 1234)
 
   - name: random
-    start_values: FUNC_RANDOM(100,[1,100], 123)
-    target_values: FUNC_RANDOM(100,[1,100], 123)
+    start_values: 
+      each_chain: FUNC_RANDOM(10,[1,100], scope.id)
+    target_values:
+      each_chain: FUNC_RANDOM(10,[1,100], scope.id)
 
 chains_per_condition: 2   # Number of chains per condition
 generations_per_chain: 3  # Number of generation per chain

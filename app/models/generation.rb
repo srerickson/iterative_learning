@@ -22,10 +22,11 @@ class Generation < ActiveRecord::Base
   def update_experiment(task)
     if next_gen.present? and self.complete? # prepare next generation?
       # send this generation's best task response to next generation
-      if best_task_response.is_a? Hash
-        next_start_vals = best_task_response['testing']
+      best = best_task_response
+      if best.is_a? Hash
+        next_start_vals = best['testing']
       else
-        next_start_vals = best_task_response
+        next_start_vals = best
       end
       next_gen.prepare(next_start_vals)
     end
