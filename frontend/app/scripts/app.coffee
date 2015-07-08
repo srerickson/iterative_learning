@@ -71,7 +71,7 @@ angular.module('iterativeLearningApp', ['ui.router','ngSanitize','schemaForm'])
 
 
 # For production:
-#.constant("ilHost","")
+.constant("ilHost","")
 
 # For development:
-.constant("ilHost","http://localhost:3000/")
+#.constant("ilHost","http://localhost:3000/")

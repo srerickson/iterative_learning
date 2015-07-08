@@ -117,13 +117,13 @@ angular.module('iterativeLearningApp')
             console.log err
 
     $scope.next = ()->
-      # try 
-      if Object.keys($scope.config.demographics).length > 1
-        $state.go('task.demographics')
-      else
+      try 
+        if Object.keys($scope.config.demographics).length > 1
+          $state.go('task.demographics')
+        else
+          $state.go('task.training')
+      catch
         $state.go('task.training')
-      # catch
-      #   $state.go('task.training')
 
     # Initialize
     #  - build response structure
