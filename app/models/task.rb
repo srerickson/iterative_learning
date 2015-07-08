@@ -7,6 +7,7 @@ class Task < ActiveRecord::Base
 
   serialize :start_values, JSON
   serialize :response_values, JSON
+  serialize :demographics, JSON
 
   include IterativeLearning::MTurk
   before_destroy :disable_hit
