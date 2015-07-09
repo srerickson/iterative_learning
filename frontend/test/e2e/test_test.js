@@ -47,15 +47,19 @@ describe('iterative learning', function() {
 
             it(test_name, function() {
 
-
               // Intro Instructions
               browser.get(task_url)
               waitForUrlToChangeTo(/task/)
-              element(by.css("[ui-sref='task.training']")).click()
+              element(by.css('[ng-click="next()"]')).click()
 
-              // Testing Page
+              //demographics
+              waitForUrlToChangeTo(/demographics/)
+              element(by.css('#age')).sendKeys(1)
+              element(by.css('option[value="Male"]')).click()
+              element(by.css('input[type="submit"]')).click()
+
+              // testing page
               waitForUrlToChangeTo(/training/)
-
               for(m=0;m<training_length;++m){
                 // A guess .. 
                 browser.driver.actions()
