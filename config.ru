@@ -12,10 +12,11 @@ use Rack::Cors do
 end
 
 use Rack::Static, urls: [
- "/scripts",
- "/styles",
- "/views",
- "/images"
+  "/bower_components",
+  "/scripts",
+  "/styles",
+  "/views",
+  "/images"
 ], root: "frontend/dist", index: 'index.html'
 
 
