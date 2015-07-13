@@ -37,11 +37,24 @@ mturk_duration: 3600 # one hour for HIT to to be completed
 mturk_lifetime: 31536000 # one year until HIT expires
 mturk_qualifications: "" # not used
 
-
 # Options for experiment interface
 #
 frontend_config:
-  feedback_delay: 10 # feedback delay in millisecods
+
+  # demographics to collect
+  demographics:
+    age:
+      type: integer
+      description: Your Age
+    gender:
+      type: string
+      enum: [Female,Male]
+      description: Your Gender
+
+
+  # feedback delay in millisecods
+  feedback_delay: 10
+
   intro_help_text: |
     <p>
       <b> Instructions go here</b>
@@ -60,4 +73,4 @@ frontend_config:
     You have completed the Training Phase. You will now move on to the Testing Phase.
   
   final_help_text: |
-    Thank you for taking part. 
+    Thank you for taking part.

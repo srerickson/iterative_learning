@@ -50,16 +50,6 @@ percent_test_for_training: 50 # percent of values to use for training (chosen ra
 #
 frontend_config:
 
-  # demographics to collect
-  demographics: 
-    age: 
-      type: integer
-      description: Your Age
-    gender:
-      type: string
-      enum: [Female,Male]
-      description: Your Gender
-
   # feedback delay in millisecods
   feedback_delay: 10 
 
