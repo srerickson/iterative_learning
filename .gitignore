@@ -5,5 +5,5 @@ experiments/*
 !experiments/example_basic.yml
 !experiments/example_mturk.yml
 tmp/*
-ruby-aws.log
+mturk.log
 access.log
