@@ -9,7 +9,7 @@ module IterativeLearning
       expose :demographics
       expose :jwt_key, as: :_jwt_key
       expose :complete?, as: :_complete
-      expose :frontend_config, unless: :collection
+      expose :config, unless: :collection
     end
 
     class Generation < Grape::Entity
@@ -48,7 +48,7 @@ module IterativeLearning
       expose :mturk_lifetime
       expose :mturk_qualifications
       expose :conditions, using: IterativeLearning::Entities::Condition
-      expose :frontend_config
+      expose :config
     end
 
 

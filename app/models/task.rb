@@ -59,8 +59,8 @@ class Task < ActiveRecord::Base
     generation.tasks.index(self)
   end
 
-  def frontend_config
-    experiment.frontend_config
+  def config
+    experiment.config
   end
 
   def send_notification_email

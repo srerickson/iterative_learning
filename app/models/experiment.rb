@@ -15,10 +15,6 @@ class Experiment < ActiveRecord::Base
     # the experiment was update with the completion of {task}
   end
 
-  def frontend_config
-    self.config["frontend"]
-  end
-
   def jwt_key
     JWT.encode({
       experiment_name: self.name
