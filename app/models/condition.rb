@@ -35,6 +35,10 @@ class Condition < ActiveRecord::Base
     super(vals)
   end
 
+  def position
+    experiment.conditions.index(self)
+  end
+
   protected 
 
   def build_chains

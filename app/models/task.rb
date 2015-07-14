@@ -10,7 +10,7 @@ class Task < ActiveRecord::Base
   serialize :demographics, JSON
 
   include IterativeLearning::MTurk
-  before_destroy :disable_hit
+  before_destroy :mturk_disableHit
 
   def prepare
     self.start_values = generation.start_values
@@ -55,22 +55,30 @@ class Task < ActiveRecord::Base
     generation.chain.condition.experiment
   end
 
+  def position
+    generation.tasks.index(self)
+  end
+
   def frontend_config
     experiment.frontend_config
   end
 
-  def mturk_hit
+  def send_notification_email
+    IterativeLearning.send_task_notification(self)
+  end
+
+  def mturk_getHit
     requester(experiment.mturk_sandbox).getHIT({HITId: mturk_hit_id})
   end
 
-  def disable_hit
+  def mturk_disableHit
     if mturk_hit_id
       begin
         requester(experiment.mturk_sandbox).disableHIT({HITId: mturk_hit_id})
       rescue ::Amazon::WebServices::Util::ValidationException => e
-        puts e
       end
     end
   end
+
 
 end

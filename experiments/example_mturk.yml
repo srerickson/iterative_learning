@@ -39,38 +39,44 @@ mturk_qualifications: "" # not used
 
 # Options for experiment interface
 #
-frontend_config:
+config:
 
-  # demographics to collect
-  demographics:
-    age:
-      type: integer
-      description: Your Age
-    gender:
-      type: string
-      enum: [Female,Male]
-      description: Your Gender
+  # send notifications when tasks are completed?
+  task_notification: sr.erickson@gmail.com
+
+  # Frontend Configs
+  frontend:
+
+    # demographics to collect
+    demographics:
+      age:
+        type: integer
+        description: Your Age
+      gender:
+        type: string
+        enum: [Female,Male]
+        description: Your Gender
 
 
-  # feedback delay in millisecods
-  feedback_delay: 10
+    # feedback delay in millisecods
+    feedback_delay: 10
 
-  intro_help_text: |
-    <p>
-      <b> Instructions go here</b>
-    </p>
+    intro_help_text: |
+      <p>
+        <b> Instructions go here</b>
+      </p>
 
-  next_button_help_text: |
-    Adjust the vertical slider and click Next
+    next_button_help_text: |
+      Adjust the vertical slider and click Next
 
-  training_correct_text: |
-    <b>Correct!</b>
+    training_correct_text: |
+      <b>Correct!</b>
 
-  training_wrong_text: |
-    <b>Incorrect.</b><br/>Adjust the slider to the correct value (indicated by the yellow bar) and click Next
-  
-  testing_help_text: |
-    You have completed the Training Phase. You will now move on to the Testing Phase.
-  
-  final_help_text: |
-    Thank you for taking part.
+    training_wrong_text: |
+      <b>Incorrect.</b><br/>Adjust the slider to the correct value (indicated by the yellow bar) and click Next
+    
+    testing_help_text: |
+      You have completed the Training Phase. You will now move on to the Testing Phase.
+    
+    final_help_text: |
+      Thank you for taking part.

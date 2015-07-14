@@ -63,6 +63,10 @@ class Chain < ActiveRecord::Base
     return true
   end
 
+  def position
+    condition.chains.index(self)
+  end
+
   protected 
 
   def build_generations
