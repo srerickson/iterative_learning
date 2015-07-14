@@ -74,9 +74,16 @@ module IterativeLearning
 
           # save responses, update the experiment
           task.update_attributes!(params[:task])
-          task.mturk_disableHit        # noop if not mturk experiment
-          task.send_notification_email # noop if notification email not set
           task.update_experiment
+
+          # don't panic if these fail
+          begin 
+            task.mturk_disableHit        # noop if not mturk experiment
+            task.send_notification_email # noop if notification email not set
+          rescue StandardError => e
+            API.logger.error "#{e.message}\n#{e.backtrace.join("\n")}"
+          end
+
         end
         
       end
