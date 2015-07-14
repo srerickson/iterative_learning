@@ -64,7 +64,7 @@ module IterativeLearning
           chain: #{chn.position+1}
           generation: #{gen.position+1}
 
-          See full results here: #{ENV['BASE_URL']}/#/experiment/viz?task_key=#{task.jwt_key}
+          See full results here: #{ENV['BASE_URL']}/#/experiment/viz?task_key=#{task.jwt_key}&key=#{exp.jwt_key}
         """
       end
     end
