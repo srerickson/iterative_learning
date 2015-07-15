@@ -1,0 +1,121 @@
+description: Study 1-RAND1, March 2015 #No selection
+
+# condition definitions (multiple)
+conditions:
+#  - name: positive    #POSITIVE
+#    start_values: FUNC_POSITIVE(100,[1,100])
+#    target_values: FUNC_POSITIVE(100,[1,100])
+
+#  - name: negative    #NEGATIVE
+#    start_values: FUNC_NEGATIVE(100,[1,100])
+#    target_values: FUNC_POSITIVE(100,[1,100])
+
+#  - name: c3 
+#    start_values: FUNC_NONLINEAR(10,[1,100])
+#    target_values: FUNC_NONLINEAR(10,[1,100])
+
+  - name: random    #RANDOM
+    start_values: FUNC_VSHAPE(100,[1,100])
+    target_values: FUNC_POSITIVE(100,[1,100])
+
+chains_per_condition: 2   # Number of chains per condition
+generations_per_chain: 6  # Number of generation per chain
+tasks_per_generation: 1   # Number of tasks per generation
+percent_test_for_training: 50 # percent of values to use for training (chosen randomly)
+
+
+# Mechanical Turk Settings
+# - ignored if: is_mturk = false 
+is_mturk: false
+mturk_sandbox: true
+mturk_title: This is a test
+mturk_description: etc etc etc
+mturk_keywords: iterative learning
+mturk_award: 0.01
+mturk_duration: 3600 # one hour for HIT to to be completed
+mturk_lifetime: 31536000 # one year until HIT expires
+mturk_qualifications: "" # not used
+
+
+# Options for experiment interface
+#
+frontend_config:
+  intro_help_text: |
+  intro_help_text: |
+    <p>
+      <h4>In this experiment, we want to measure your ability to learn how the
+      	  length of one line predicts the length of another line.</h4>
+      There are two stages: a Training Phase, and a Testing Phase.
+    </p>
+
+    <p>
+      In the Training Phase, you will see this:
+    </p>
+    <p>
+      <img src="/images/fig1.png" class="col-md-12 well"/>
+    </p>
+    <p>
+      Any % of the horizontal bar, from 1% to 100%, can be filled in blue.
+      In the figure above, approximately 80% is filled in blue.
+    </p>
+    <p>
+      You must drag the slider to any part of the
+      vertical bar. As you do, the vertical bar will fill with red. It will look like this:
+    </p>
+    <p>
+      <img src="/images/fig2.png" class="col-md-12 well"/>
+    </p>
+    <p>
+      After you have adjusted the vertical bar, click ‘Next’.
+      Another vertical bar will appear, partly filled in yellow. This bar indicates
+      how much of the vertical bar <b>should</b> be filled in, given how much
+      of the <b>horizontal</b> bar is filled in. It will look like this:
+    </p>
+    <p>
+      <img src="/images/fig3.png" class="col-md-12 well"/>
+    </p>
+    <p>
+      If the yellow and red bars are the same, the word ‘Correct!‘ will appear on the screen.
+      You will then proceed to the next round.  If the yellow and red bars are different 
+      (as in the image above), the word ‘Incorrect.’ will appear. You must now drag 
+      the slider to the same level as the yellow bar. Once you have done so, you can click
+       ‘Next’ to move on to the next round. There will be a brief pause before you move on. 
+    </p>
+    <p>
+      There are 50 rounds in the Training Phase, each with a different amount of
+      the blue bar filled in. <b>You should try to learn how the length of the blue bar
+      predicts the correct length of the red bar.</b>
+    </p>
+    <p>
+      Once you have completed the Training Phase, you will move on to the Testing Phase.
+    </p>
+    <p>
+      The Testing Phase is the same as the Training Phase, except that here there is
+      no feedback. In other words, there will be no yellow bar.
+      Instead, after you click ‘Next’, you will move straight on to the next round.
+      You will not be told if you were correct or not.
+    </p>
+    <p>
+      There are 100 rounds in the Testing Phase.
+    </p>
+    <p>
+      Once you have completed the Testing Phase, click ‘Submit’ to complete the experiment.
+    </p>
+    <p class="alert alert-danger strong">
+      Do not press the back button, or refresh the page, during the experiment!
+    </p>
+    <p>
+     If you have any questions, please ask the experimenter now.  
+    </p>
+    <p>
+      <b>Many thanks.</b>
+    </p>
+   
+
+  next_button_help_text: Adjust the vertical slider and click Next
+  training_correct_text: <b>Correct!</b>
+  training_wrong_text: <b>Incorrect.</b><br/>Adjust the slider to the correct value (indicated by the yellow bar) and click Next
+  testing_help_text: |
+    You have now completed the Training Phase. You will now move on to the Testing Phase. Here, there will be no yellow bar, and no feedback. You must decide for yourself what height to set the red bar, based on what you learned in the Training Phase.
+  final_help_text: |
+    Thank you for taking part. 
