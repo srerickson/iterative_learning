@@ -44,6 +44,9 @@ config:
   # feedback delay in millisecods
   feedback_delay: 10
 
+  # mandatory timer (testing only)
+  minimum_task_time: 3000
+
   # help texts
   intro_help_text: |
     <p>

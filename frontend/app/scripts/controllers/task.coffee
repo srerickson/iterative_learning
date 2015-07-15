@@ -2,11 +2,10 @@
 
 
 angular.module('iterativeLearningApp')
-  .controller 'TaskCtrl', ($scope, $stateParams, $state, $http, ilHost, task) ->
+  .controller 'TaskCtrl', ($scope, $stateParams, $state, $http, $timeout, ilHost, task) ->
 
     # UI help texts & Other Frontend Configs
-    if task.config
-      $scope.config = task.config
+    $scope.config = task.config || {}
 
     # task state values
     $scope.state =
@@ -15,6 +14,8 @@ angular.module('iterativeLearningApp')
       guess: null           # the value of the response for current step
       show_feedback: false  # whether feedback bar is showing
       transitioning: false  # transitioning b/w steps or states?
+      task_timer: false     # whether the minimum task time has elapsed
+
 
     # results go here
     responses = {
@@ -70,6 +71,13 @@ angular.module('iterativeLearningApp')
         return check(phase)
       else 
         return check('testing') and check('training')
+
+    # timer for enforcing minimum task time
+    $scope.start_task_timer = ()->
+      $scope.state.task_timer = true
+      $timeout( ()->
+        $scope.state.task_timer = false
+      ,$scope.config.minimum_task_time || 0)
 
     # adds a response for the current step
     $scope.save_response = ()->

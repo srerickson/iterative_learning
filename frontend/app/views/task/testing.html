@@ -18,11 +18,17 @@
         {{status_message()}}
       </p>
       <p>
-        <a class="btn btn-success" ng-click="next()" ng-class="{disabled: state.transitioning || !state.guess}">Next > </a> 
+
+
+        <a class="btn btn-success" ng-click="next()" 
+        ng-class="{disabled: state.transitioning || !state.guess || state.task_timer }">
+          Next > </a> 
         <p class="strong">Adjust the vertical slider and click Next.</p>
       </p>
     </div>  
     <div class="alert alert-danger strong">Do not use the back button!</div>
   </div>
 
+  <div il-task-timer="state.task_timer" time="config.minimum_task_time" ng-show="state.task_timer"/>
 </div>
+
