@@ -39,7 +39,7 @@ mturk_qualifications: "" # not used
 
 # Options for experiment interface
 #
-frontend_config:
+config:
   intro_help_text: |
   intro_help_text: |
     <p>
