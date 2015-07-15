@@ -4,9 +4,9 @@
 angular.module('iterativeLearningApp')
   .controller 'TaskCtrl', ($scope, $stateParams, $state, $http, ilHost, task) ->
 
-    # UI help texts 
-    if task.frontend_config
-      $scope.messages = task.frontend_config
+    # UI help texts & Other Frontend Configs
+    if task.config
+      $scope.config = task.config
 
     # task state values
     $scope.state =
@@ -21,6 +21,8 @@ angular.module('iterativeLearningApp')
       training: []
       testing: []
     }
+
+    $scope.demographics = {}
 
     # stuff for mturk form
     $scope.mturk = 
@@ -105,6 +107,7 @@ angular.module('iterativeLearningApp')
       if !$scope.mturk_preview() and $scope.task_is_complete()
         data = task: 
           response_values: responses
+          demographics: $scope.demographics
         if !!$stateParams.workerId
           data.task.mturk_worker_id = $stateParams.workerId
         $http.post(ilHost+"/task?key=#{$stateParams.key}", data)
@@ -112,6 +115,15 @@ angular.module('iterativeLearningApp')
             $scope.submitted = data
           ,(err)->
             console.log err
+
+    $scope.next = ()->
+      try 
+        if Object.keys($scope.config.demographics).length > 1
+          $state.go('task.demographics')
+        else
+          $state.go('task.training')
+      catch
+        $state.go('task.training')
 
     # Initialize
     #  - build response structure
@@ -123,80 +135,6 @@ angular.module('iterativeLearningApp')
             y: null
             time: null
           })
-
-
-
-
-  .controller 'TaskTrainingCtrl', ($scope, $state, $timeout) ->
-
-    $scope.$parent.state = 
-      name: "training"
-      step: 0
-      show_feedback: false
-      transitioning: false
-      guess: null
-    
-    # feedback delay in milliseconds
-    try
-      delay = $scope.messages.feedback_delay || 1500
-    catch
-      delay = 1500
-
-    $scope.feedback_message = $scope.messages.next_button_help_text
-
-
-    $scope.next = ()-> 
-      if $scope.state.guess != null and !$scope.state.transitioning
-        # keep the first guess for this step
-        if !$scope.state.show_feedback
-          $scope.save_response() 
-        # always show feedback
-        $scope.state.show_feedback = true 
-        if $scope.guess_is_correct()
-          $scope.feedback_message = $scope.messages.training_correct_text
-          $scope.state.transitioning = true
-          $timeout( ()->
-            if $scope.state.step < $scope.task_length('training')-1
-              $scope.state.step += 1 
-              $scope.state.guess = null
-              $scope.state.show_feedback = false
-              $scope.state.transitioning = false
-              $scope.feedback_message = $scope.messages.next_button_help_text
-            else
-              $state.go("task.testing_intro")
-          , delay)
-          return true
-        else
-          $scope.feedback_message = $scope.messages.training_wrong_text
-          return false    
-
-
-
-
-  .controller 'TaskTestingCtrl', ($scope, $state) ->
-
-    $scope.$parent.state = 
-      name: "testing"
-      step: 0
-      show_feedback: false
-      transitioning: false
-      guess: null
-
-    $scope.next = ()->
-      # do nothing if no input
-      return if $scope.state.guess == null 
-      $scope.save_response()
-      if $scope.state.step < $scope.task_length('testing')-1
-        $scope.state.guess = null
-        $scope.state.step += 1 # continue with testing 
-      else
-        $state.go("task.final")
-
-
-
-
-  .controller 'TaskFinalCtrl', ($scope, $stateParams, $state, $http, ilHost) ->
-    $scope.$parent.submit()
 
 
 

@@ -63,16 +63,28 @@ module IterativeLearning
 
         # error if the task is already complete
         # (we don't want to overwrite the data)
-        error!('task is already complete', 500) if task.complete? 
+        if task.complete?
+          error!('task is already complete', 500)
+        else
+          # sanity check the response values
+          # - response values should have measurable fitness
+          # - this will throw an error if response_values doesn't look right
+          # - request will abort (rescue_all)
+          task.generation.chain.fitness( params[:task][:response_values] )
 
-        # sanity check the response values
-        # - response values should have measurable fitness
-        # - this will throw an error if response_values doesn't look right
-        # - request will abort (rescue_all)
-        task.generation.chain.condition.fitness( params[:task][:response_values] )
+          # save responses, update the experiment
+          task.update_attributes!(params[:task])
+          task.update_experiment
 
-        task.update_attributes!(params[:task])
-        task.update_experiment
+          # don't panic if these fail
+          begin 
+            task.mturk_disableHit        # noop if not mturk experiment
+            task.send_notification_email # noop if notification email not set
+          rescue StandardError => e
+            API.logger.error "#{e.message}\n#{e.backtrace.join("\n")}"
+          end
+
+        end
         
       end
 

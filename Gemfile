@@ -13,7 +13,7 @@ gem 'require_all'
 gem 'bcrypt', '~> 3.1.7'
 gem "racksh"
 
-gem "ruby-aws"
+gem "mturk"
 
 group :development do 
   gem "rerun"

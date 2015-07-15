@@ -3,6 +3,7 @@
 config/settings.yml
 tmp/*
 ruby-aws.log
+mturk.log
 access.log
 \#*#
 *~

@@ -4,20 +4,28 @@ description: |
 # condition definitions (multiple)
 conditions:
   - name: positive
-    start_values: FUNC_POSITIVE(10,[1,10]) # 10 values between 1 and 10 (inclusive)
-    target_values: FUNC_POSITIVE(10,[1,10])
+    start_values: FUNC_POSITIVE(10,[1,100]) # 10 values between 1 and 100 (inclusive)
+    target_values: FUNC_POSITIVE(10,[1,100])
 
   - name: negative
-    start_values: FUNC_NEGATIVE(10,[1,10])
-    target_values: FUNC_NEGATIVE(10,[1,10])
+    start_values: FUNC_NEGATIVE(10,[1,100])
+    target_values: FUNC_NEGATIVE(10,[1,100])
 
-  - name: nonlinear
-    start_values: FUNC_NONLINEAR(10,[1,10])
-    target_values: FUNC_NONLINEAR(10,[1,10])
 
+  - name: v-shape
+    start_values: FUNC_VSHAPE(10,[1,100])
+    target_values: FUNC_RANDOM(10,[1,100])
+
+
+  # Random chains are deterministic. 
+  # The seed for the pseudo-random number generator is 
+  # specified in the third term of the function definition.
+  # Here each chain will have a unique random funciton.
   - name: random
-    start_values: FUNC_RANDOM(10,[1,10])
-    target_values: FUNC_RANDOM(10,[1,10])
+    start_values: 
+      each_chain: FUNC_RANDOM(10,[1,100], scope.id)
+    target_values:
+      each_chain: FUNC_RANDOM(10,[1,100], scope.id)
 
 chains_per_condition: 2   # Number of chains per condition
 generations_per_chain: 3  # Number of generation per chain
@@ -25,23 +33,18 @@ tasks_per_generation: 3   # Number of tasks per generation
 percent_test_for_training: 50 # percent of values to use for training (chosen randomly)
 
 
-# # Mechanical Turk Settings
-# # - ignored if: is_mturk = false 
-# is_mturk: false
-# mturk_sandbox: true
-# mturk_title: This is a test
-# mturk_description: etc etc etc
-# mturk_keywords: iterative learning
-# mturk_award: 0.01
-# mturk_duration: 3600 # one hour for HIT to to be completed
-# mturk_lifetime: 31536000 # one year until HIT expires
-# mturk_qualifications: "" # not used
+# Other Options
+config:
 
+  # send notifications when tasks are completed?
+  task_notification: sr.erickson@gmail.com
 
-# Options for experiment interface
-#
-frontend_config:
-  feedback_delay: 10 # feedback delay in millisecods
+  ### Frontend Configs ###
+
+  # feedback delay in millisecods
+  feedback_delay: 10
+
+  # help texts
   intro_help_text: |
     <p>
       <b> Instructions go here</b>
@@ -55,9 +58,9 @@ frontend_config:
 
   training_wrong_text: |
     <b>Incorrect.</b><br/>Adjust the slider to the correct value (indicated by the yellow bar) and click Next
-  
+
   testing_help_text: |
     You have completed the Training Phase. You will now move on to the Testing Phase.
-  
+
   final_help_text: |
     Thank you for taking part. 

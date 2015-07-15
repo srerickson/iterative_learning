@@ -7,13 +7,10 @@ class Task < ActiveRecord::Base
 
   serialize :start_values, JSON
   serialize :response_values, JSON
+  serialize :demographics, JSON
 
   include IterativeLearning::MTurk
-  before_destroy :disable_hit
-
-  def mturk_sandbox
-    experiment.mturk_sandbox
-  end
+  before_destroy :mturk_disableHit
 
   def prepare
     self.start_values = generation.start_values
@@ -26,7 +23,8 @@ class Task < ActiveRecord::Base
         experiment.mturk_keywords,
         experiment.mturk_award, 
         experiment.mturk_duration,
-        experiment.mturk_lifetime
+        experiment.mturk_lifetime,
+        experiment.mturk_sandbox
       )
       self.mturk_hit_id = result[:HITId]
     end    
@@ -49,27 +47,38 @@ class Task < ActiveRecord::Base
     ENV["BASE_URL"] + "/#/task?key=#{jwt_key}"
   end
 
-  # return task's response fitness score (in relation to parent confition's target values)
   def response_fitness
-    self.generation.chain.condition.fitness( self.response_values )
+    self.generation.chain.fitness( self.response_values )
   end
 
   def experiment
     generation.chain.condition.experiment
   end
 
-  def frontend_config
-    experiment.frontend_config
+  def position
+    generation.tasks.index(self)
   end
 
-  def mturk_hit
-    requester.getHIT({HITId: mturk_hit_id})
+  def config
+    experiment.config
   end
 
-  def disable_hit
+  def send_notification_email
+    IterativeLearning.send_task_notification(self)
+  end
+
+  def mturk_getHit
+    requester(experiment.mturk_sandbox).getHIT({HITId: mturk_hit_id})
+  end
+
+  def mturk_disableHit
     if mturk_hit_id
-      requester.disableHIT({HITId: mturk_hit_id})
+      begin
+        requester(experiment.mturk_sandbox).disableHIT({HITId: mturk_hit_id})
+      rescue ::Amazon::WebServices::Util::ValidationException => e
+      end
     end
   end
+
 
 end

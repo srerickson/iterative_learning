@@ -1,3 +1,5 @@
+require 'mail'
+
 module IterativeLearning
 
   @@FitnessFunctions = {}
@@ -15,11 +17,12 @@ module IterativeLearning
     @@TaskConditions[name] = method
   end
 
-  def self.build_condition(build_string)
+  def self.build_condition(build_string, scope=nil)
     # match things like NAME(ARGS)
     if match = /^(.*)\((.*)\)$/.match(build_string)
       name = match[1]
-      args = eval "[#{match[2]}]"
+      eval_build_string = Proc.new{|scope, expr| eval "[#{expr}]"}
+      args = eval_build_string.call(scope, match[2])
     else
       name = build_string
       args = []
@@ -36,5 +39,35 @@ module IterativeLearning
     }
   end
 
+  def self.send_task_notification(task)
+    gen = task.generation
+    chn = gen.chain
+    cnd = chn.condition
+    exp = cnd.experiment
+    if exp.config["task_notification"].present?
+      options = { :address              => "smtp.gmail.com",
+                  :port                 => 587,
+                  :user_name            => ENV['SMTP_USERNAME'],
+                  :password             => ENV['SMTP_PASSWORD'],
+                  :authentication       => 'plain',
+                  :enable_starttls_auto => true  }
+      Mail.defaults do
+        delivery_method :smtp, options
+      end
+      Mail.deliver do
+        to exp.config["task_notification"]
+        from ENV['SMTP_USERNAME']
+        subject "Iterative Learning Notification [#{exp.name}]"
+        body """A task has been completed:\n
+          experiment: #{exp.name}
+          condition: #{cnd.position+1} (#{cnd.name})
+          chain: #{chn.position+1}
+          generation: #{gen.position+1}
+
+          See full results here: #{ENV['BASE_URL']}/#/experiment/viz?task_key=#{task.jwt_key}&key=#{exp.jwt_key}
+        """
+      end
+    end
+  end
 
 end

@@ -42,11 +42,11 @@ module IterativeLearning
       values.spread(num)
     end
 
-    def self.random(num=1, range=[1,num])
+    def self.random(num=1, range=[1,num], seed=Random.new_seed)
       values = []
       (range[0]..range[1]).each do |i|
         x = i
-        y = rand(range[0]..range[1])
+        y = Random.new(seed**(i+1)).rand(range[0]..range[1])
         values.push({x: x, y: y})
       end
       values.spread(num)

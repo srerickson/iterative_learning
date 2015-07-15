@@ -1,4 +1,5 @@
 require 'yaml'
+require 'pp'
 
 namespace :il do 
 
@@ -63,13 +64,32 @@ namespace :il do
     puts "------------------------------------------"
   end
 
-  
-  task :clear_hits => :environment do 
-    r = Amazon::WebServices::MechanicalTurkRequester.new :Host => :Sandbox
-    hits = r.searchHITs({PageSize: 100})[:HIT]
-    if hits
-      hits.each{|h| r.disableHIT({HITId: h[:HITId]})}
+
+  namespace :mturk do
+
+    desc "Test Mturk API Calls"
+    task :test => :environment do
+      @mturk = Amazon::WebServices::MechanicalTurkRequester.new
+      puts "I have $#{@mturk.availableFunds} in Sandbox"
     end
+
+    desc "Disables all sandbox HITs (100 at a time)"
+    task :clear_sandbox => :environment do
+      r = Amazon::WebServices::MechanicalTurkRequester.new :Host => :Sandbox
+      hits = r.searchHITs({PageSize: 100})[:HIT]
+      if hits
+        hits.each{|h| r.disableHIT({HITId: h[:HITId]})}
+      end
+    end
+
+    desc "Inspect hit for given task"
+    task :getHit, [:task_key] => :environment do |t, args|
+      jwt = JWT.decode(args[:task_key], ENV["IL_SECRET"])
+      task = Task.find(jwt[0]['task_id'])
+      pp task.mturk_hit
+    end
+
+
   end
 
 

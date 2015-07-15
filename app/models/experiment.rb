@@ -4,7 +4,7 @@ require 'yaml'
 class Experiment < ActiveRecord::Base
 
   has_many :conditions, dependent: :destroy, inverse_of: :experiment
-  serialize :frontend_config, JSON
+  serialize :config, JSON
   validates_uniqueness_of :name
 
   def prepare

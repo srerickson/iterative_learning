@@ -18,18 +18,25 @@ class Condition < ActiveRecord::Base
   end
 
   def fitness(vals)
-    # FIXME -- use the registered fitness function
     IterativeLearning::FunctionLearning.sum_of_error(self.target_values, vals)
   end
 
   def start_values=vals
-    vals = IterativeLearning.build_condition(vals) if vals.is_a? String
+    if vals.is_a? String and vals =~ /^(.*)\((.*)\)$/
+      vals = IterativeLearning.build_condition(vals)
+    end
     super(vals)
   end
 
   def target_values=vals
-    vals = IterativeLearning.build_condition(vals) if vals.is_a? String
+    if vals.is_a? String and vals =~ /^(.*)\((.*)\)$/
+      vals = IterativeLearning.build_condition(vals)
+    end
     super(vals)
+  end
+
+  def position
+    experiment.conditions.index(self)
   end
 
   protected 

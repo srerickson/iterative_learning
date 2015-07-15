@@ -38,7 +38,6 @@ angular.module('iterativeLearningApp')
           .attr("cy", (d)-> (100-d.y)*2 )
 
       if task.response_values and task.response_values.testing
-        console.log "here"
         chart.selectAll(".dot.response_vals")
           .data(task.response_values.testing)
           .enter()

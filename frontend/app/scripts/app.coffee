@@ -8,7 +8,7 @@
  #
  # Main module of the application.
 ###
-angular.module('iterativeLearningApp', ['ui.router', 'ngSanitize'])
+angular.module('iterativeLearningApp', ['ui.router','ngSanitize','schemaForm'])
 
 .config ($stateProvider) ->
   $stateProvider.state "task",
@@ -27,6 +27,13 @@ angular.module('iterativeLearningApp', ['ui.router', 'ngSanitize'])
 
 
 # Task States
+.config ($stateProvider) ->
+  $stateProvider.state "task.demographics",
+    url: "/demographics"
+    controller: "TaskDemographicsCtrl"
+    templateUrl: "views/task/demographics.html"
+
+
 .config ($stateProvider) ->
   $stateProvider.state "task.training",
     url: "/training"

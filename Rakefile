@@ -34,7 +34,7 @@ namespace :db do
   task(:rollback => :environment) do
     ActiveRecord::Base.logger = Logger.new(STDOUT)
     ActiveRecord::Migration.verbose = true
-    steps = ENV["STEPS"].to_i || 1
+    steps = ENV["STEPS"].to_i == 0 ? 1 : ENV["STEPS"].to_i
     ActiveRecord::Migrator.rollback("db/migrate", steps)
   end
 

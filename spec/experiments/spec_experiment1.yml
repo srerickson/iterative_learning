@@ -14,8 +14,10 @@ conditions:
     target_values: FUNC_NONLINEAR(10,[1,10])
 
   - name: random
-    start_values: FUNC_RANDOM(10,[1,10])
-    target_values: FUNC_RANDOM(10,[1,10])
+    start_values: 
+      each_chain: FUNC_RANDOM(10,[1,10], scope.id)
+    target_values:
+      each_chain: FUNC_RANDOM(10,[1,10], scope.id)
 
 chains_per_condition: 2
 generations_per_chain: 2
