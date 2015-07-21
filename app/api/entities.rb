@@ -2,6 +2,7 @@ module IterativeLearning
   module Entities
 
     class Task < Grape::Entity
+      expose :id
       expose :mturk_worker_id
       expose :mturk_hit_id
       expose :start_values, as: :_start_values

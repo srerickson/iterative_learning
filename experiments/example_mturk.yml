@@ -46,6 +46,12 @@ config:
 
   ### Frontend Configs ###
 
+  # feedback delay in millisecods
+  feedback_delay: 10
+
+  # mandatory timer (testing only)
+  minimum_task_time: 3000
+
   # demographics to collect
   demographics:
     age:
@@ -55,9 +61,6 @@ config:
       type: string
       enum: [Female,Male]
       description: Your Gender
-
-  # feedback delay in millisecods
-  feedback_delay: 10
 
   intro_help_text: |
     <p>

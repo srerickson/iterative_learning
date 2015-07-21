@@ -9,6 +9,10 @@ angular
       show_feedback: false
       transitioning: false
       guess: null
+      task_timer: false
+    
+    $scope.start_task_timer()
+
 
     $scope.next = ()->
       # do nothing if no input
@@ -16,6 +20,7 @@ angular
       $scope.save_response()
       if $scope.state.step < $scope.task_length('testing')-1
         $scope.state.guess = null
-        $scope.state.step += 1 # continue with testing 
+        $scope.state.step += 1 # continue with testing
+        $scope.start_task_timer()
       else
         $state.go("task.final")

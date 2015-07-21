@@ -21,7 +21,10 @@
         {{status_message()}}
       </p>
       <p>
-        <a class="btn btn-success" ng-click="next()" ng-class="{disabled: state.transitioning || !state.guess}">Next > </a> 
+        <a class="btn btn-success" ng-click="next()" 
+        ng-class="{disabled: state.transitioning || !state.guess }">
+          Next > 
+        </a> 
         <p class="strong" ng-bind-html="feedback_message"></p>
       </p>
     </div>  

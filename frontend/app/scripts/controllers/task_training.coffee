@@ -9,15 +9,12 @@ angular
       show_feedback: false
       transitioning: false
       guess: null
+      task_timer: false # no task timer during training
     
+
     # feedback delay in milliseconds
-    try
-      delay = $scope.config.feedback_delay || 1500
-    catch
-      delay = 1500
-
+    delay = $scope.config.feedback_delay || 1500
     $scope.feedback_message = $scope.config.next_button_help_text
-
 
     $scope.next = ()-> 
       if $scope.state.guess != null and !$scope.state.transitioning
