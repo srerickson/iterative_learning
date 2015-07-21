@@ -1,3 +1,4 @@
+require 'models/task.rb'
 
 module IterativeLearning
 
@@ -63,12 +64,18 @@ module IterativeLearning
       values.spread(num)
     end
 
+    def self.fromtask(task_id)
+      Task.find(task_id).response_values["testing"]
+    rescue StandardError => e
+      nil
+    end
 
     IterativeLearning.register_condition_builder('FUNC_POSITIVE', self.method(:positive))
     IterativeLearning.register_condition_builder('FUNC_NEGATIVE', self.method(:negative))
     IterativeLearning.register_condition_builder('FUNC_RANDOM', self.method(:random))
     IterativeLearning.register_condition_builder('FUNC_VSHAPE',self.method(:v_shape))
     IterativeLearning.register_condition_builder('FUNC_NONLINEAR',self.method(:nonlinear))
+    IterativeLearning.register_condition_builder('FUNC_FROMTASK',self.method(:fromtask))
 
     # Returns the sum of difference between test and target.
     # test & target may be either arrays of objects with 'x','y' keys
