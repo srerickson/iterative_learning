@@ -13,12 +13,12 @@ module Helpers
     Experiment.find_by_name(name)
   end
 
-  def sample_positive
-    IterativeLearning::FunctionLearning.positive(10)
+  def sample_positive(num=10)
+    IterativeLearning::FunctionLearning.positive(num)
   end
 
-  def sample_negative
-    IterativeLearning::FunctionLearning.negative(10)
+  def sample_negative(num=10)
+    IterativeLearning::FunctionLearning.negative(num)
   end
 
 end
@@ -28,4 +28,16 @@ RSpec.configure do |config|
   Rake.application.init
   Rake.application.load_rakefile
   config.include Helpers
+
+  config.before(:all) do
+    Rake.application['db:migrate'].invoke
+    ActiveRecord::Base.logger = nil
+    ActiveRecord::Migration.verbose = false 
+  end
+
+  config.after(:all) do
+    puts "clearing experiments"
+    Experiment.all.each{|e| e.destroy}
+  end
+
 end

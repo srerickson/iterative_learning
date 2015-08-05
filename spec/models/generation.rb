@@ -28,6 +28,42 @@ describe "Generation" do
     end
   end
 
+  describe '#next_gen' do 
+    it "should return nil if last generation in chain" do
+      expect(@gen_3.next_gen).to be_nil
+    end
+    it "should return next generation" do
+      expect(@gen_2.next_gen).to eq(@gen_3)
+    end
+  end
+
+
+  describe "#reset" do
+
+    it "should reset all tasks in the generation and call reset on the next generation" do 
+    
+      expect(@gen_1.next_gen).to eq(@gen_2)
+      expect(@gen_1.next_gen.next_gen).to eq(@gen_3)
+
+      @gen_1.tasks.each do |t|
+        t.response_values = sample_positive(10)
+        t.save
+        t.update_experiment
+      end
+      expect(@gen_1.complete?).to be(true)
+      expect(@gen_2.active?).to be(true)
+      expect(@gen_1.next_gen).to receive(:reset).and_call_original
+      expect(@gen_1.next_gen.next_gen).to receive(:reset)
+      @gen_1.reset
+      @gen_1.tasks.each do |t|
+        expect(t.response_values).to be_nil
+      end
+      expect(@gen_1.reload.complete?).to be(false)
+      expect(@gen_2.reload.active?).to be(false)
+    end
+
+  end
+
 
   it "should prepare next generation after completion" do
 

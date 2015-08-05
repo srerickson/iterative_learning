@@ -10,6 +10,7 @@ class Generation < ActiveRecord::Base
 
   # setup the generation's start values 
   # and prepare tasks
+  #
   def prepare(start_vals)
     train_ratio = chain.condition.experiment.percent_test_for_training / 100.0
     self.start_values = IterativeLearning.training_test_split(start_vals, train_ratio)
@@ -17,8 +18,10 @@ class Generation < ActiveRecord::Base
     tasks.each(&:prepare)
   end
 
+
   # propagate task completion event
   # up the experiment hierarchy
+  #
   def update_experiment(task)
     if next_gen.present? and self.complete? # prepare next generation?
       # send this generation's best task response to next generation
@@ -37,7 +40,8 @@ class Generation < ActiveRecord::Base
   # Previous generation in the chain
   #
   def prev_gen
-    if self.position > 0
+    return @prev_gen.reload if @prev_gen
+    @prev_gen ||= if self.position > chain.generations.first.position
       chain.generations[self.position-1]
     else
       nil
@@ -48,7 +52,8 @@ class Generation < ActiveRecord::Base
   # Next generation in the chain
   #
   def next_gen
-    if self.position < chain.generations.length-1
+    return @next_gen.reload if @next_gen
+    @next_gen = if self.position < chain.generations.last.position
       chain.generations[self.position+1]
     else
       nil
@@ -60,6 +65,17 @@ class Generation < ActiveRecord::Base
   #
   def active?
     !complete? and (prev_gen.nil? or prev_gen.complete?)
+  end
+
+  # Clear all tasks in the generation
+  # ! and all future generations !
+  # Once reset the generation must be
+  # prepared again.
+  #
+  def reset
+    update_attributes(start_values: [])
+    tasks.each{|t| t.reset(false) }
+    next_gen.reset if next_gen
   end
 
 

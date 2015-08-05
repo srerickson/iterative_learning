@@ -65,6 +65,15 @@ namespace :il do
   end
 
 
+  task :reset_task, [:task_id] => :environment do |t, args| 
+    STDOUT.print "This action will remove the task. Are you sure? [y/n] :"
+    STDOUT.flush
+    i = STDIN.gets.strip
+    if i =~ /[Yy].*/
+      Task.find(args[:task_id]).reset
+    end
+  end
+
   namespace :mturk do
 
     desc "Test Mturk API Calls"
