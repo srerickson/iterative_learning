@@ -120,6 +120,10 @@ describe "Generation" do
       expect(@gen_2.active?).to eq(false)
       expect(@gen_2.start_values).to be_empty
 
+      @gen_2.tasks.each do |t|
+        expect(t.mturk_getHit).to be(nil)
+      end
+
       @gen_1.tasks.each do |t|
         t.update_attributes(response_values: sample_positive )
         t.mturk_disableHit

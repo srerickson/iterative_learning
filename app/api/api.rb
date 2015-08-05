@@ -60,33 +60,34 @@ module IterativeLearning
         jwt = JWT.decode(params[:key], ENV["IL_SECRET"])
         task_id = jwt[0]['task_id']
         task = Task.find(task_id)
-
         # error if the task is already complete
         # (we don't want to overwrite the data)
         if task.complete?
           error!('task is already complete', 500)
         else
-          # sanity check the response values
-          # - response values should have measurable fitness
-          # - this will throw an error if response_values doesn't look right
-          # - request will abort (rescue_all)
-          task.generation.chain.fitness( params[:task][:response_values] )
-
-          # save responses, update the experiment
-          task.update_attributes!(params[:task])
-          task.update_experiment
-
-          # don't panic if these fail
-          begin 
-            task.mturk_disableHit        # noop if not mturk experiment
-            task.send_notification_email # noop if notification email not set
+          begin # High Priority (send email on error)
+            # sanity check the response values
+            # - response values should have measurable fitness
+            # - this will throw an error if response_values doesn't look right
+            # - request will abort (rescue_all)
+            task.generation.chain.fitness( params[:task][:response_values] )
+            # save responses, update the experiment
+            task.update_attributes!(params[:task])
+            task.update_experiment
+            task.mturk_disableHit # noop if not mturk experiment
+          rescue StandardError => e
+            msg = "task_id: #{task_id}\n"
+            msg += "#{e.message}\n#{e.backtrace.join("\n")}"
+            IterativeLearning.send_error_email msg
+            throw e
+          end
+          begin # Low Priority
+            task.send_notification_email # noop if notification address not set
           rescue StandardError => e
             API.logger.error "#{e.message}\n#{e.backtrace.join("\n")}"
           end
-
-        end
-        
-      end
+        end # task.complete?
+      end #post
 
 
     end

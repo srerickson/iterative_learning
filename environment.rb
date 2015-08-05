@@ -16,9 +16,10 @@ require 'require_all'
 ### Read config/settings.yml
 settings = YAML.load_file(File.expand_path("../config/settings.yml",__FILE__))
 
-ENV["IL_ENV"]    ||= settings['environment']
-ENV["IL_SECRET"] ||= settings['secret']
-ENV["BASE_URL"]  ||= settings[ENV['IL_ENV']]['base_url']
+ENV["IL_ENV"]      ||= settings['environment']
+ENV["IL_SECRET"]   ||= settings['secret']
+ENV["BASE_URL"]    ||= settings[ENV['IL_ENV']]['base_url']
+ENV["ALERT_EMAIL"] ||= settings['alert_email']
 
 
 ### ActiveRecord config
