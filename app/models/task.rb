@@ -12,13 +12,12 @@ class Task < ActiveRecord::Base
   include IterativeLearning::MTurk
   before_destroy :mturk_disableHit
 
-  # - setup start values
-  # - overwrite any response data!
-  # - setup mturk if necessary
+
+  # Prepare the task for users
+  # - clear any response values
+  # - setup mturk HIT if needed
   def prepare
-    self.start_values = generation.start_values
-    self.response_values = nil
-    self.demographics = {}
+    clear # response values, disableHIT
     # build HIT if mturk
     if experiment.is_mturk
       begin
@@ -44,18 +43,28 @@ class Task < ActiveRecord::Base
     save!
   end
 
+  def clear!
+    clear
+    save!
+  end
+
+  def clear
+    self.start_values = generation.start_values
+    self.response_values = nil
+    self.demographics = {}
+    mturk_disableHit
+  end
+
+  # reset a task to a prepared state
+  # .. also destroy all future generation tasks!
+  def reset!
+    self.prepare
+    generation.next_gen._clear! if generation.next_gen
+  end
+
   # send update event up the experiment hierarchy
   def update_experiment
     generation.update_experiment(self)
-  end
-
-  # clear any task results, prepare 
-  # resets all future generations
-  def reset(propagate=true)
-    self.prepare
-    if (n = generation.next_gen) and propagate
-      n.reset
-    end
   end
 
   def complete?
@@ -97,10 +106,10 @@ class Task < ActiveRecord::Base
   def mturk_disableHit
     if mturk_hit_id
       requester(experiment.mturk_sandbox).disableHIT({HITId: mturk_hit_id})
+      self.mturk_hit_id = nil
     end
   rescue Amazon::WebServices::Util::ValidationException => e
     throw e unless e.message == "AWS.MechanicalTurk.HITDoesNotExist"
   end
-
 
 end

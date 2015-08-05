@@ -67,17 +67,6 @@ class Generation < ActiveRecord::Base
     !complete? and (prev_gen.nil? or prev_gen.complete?)
   end
 
-  # Clear all tasks in the generation
-  # ! and all future generations !
-  # Once reset the generation must be
-  # prepared again.
-  #
-  def reset
-    update_attributes(start_values: [])
-    tasks.each{|t| t.reset(false) }
-    next_gen.reset if next_gen
-  end
-
 
   # All the tasks complete?
   #
@@ -102,6 +91,17 @@ class Generation < ActiveRecord::Base
       end
       best_task.response_values
     end
+  end
+
+
+  # Clear all tasks in the generation
+  # ! and all future generations !
+  # (needs to be prepared again after clear)
+  #
+  def _clear!
+    update_attributes(start_values: [])
+    tasks.each{|t| t.clear! }
+    next_gen._clear! if next_gen
   end
 
 
