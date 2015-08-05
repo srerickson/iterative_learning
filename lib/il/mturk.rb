@@ -27,8 +27,8 @@ module IterativeLearning
         :Keywords => keywords,
         :AssignmentDurationInSeconds => duration,
         :LifetimeInSeconds => lifetime,
-        :RequesterAnnotation => uri,
-        :UniqueRequestToken => Digest::SHA2.hexdigest(uri)
+        :RequesterAnnotation => uri
+        #:UniqueRequestToken => Digest::SHA2.hexdigest(uri)
       )
     end
 
