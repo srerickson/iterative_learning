@@ -1,5 +1,4 @@
-description: |
-  This is an example experiment.
+description: Example MTurk Experiment
 
 # condition definitions (multiple)
 conditions:
@@ -16,8 +15,10 @@ conditions:
     target_values: FUNC_NONLINEAR(10,[1,100])
 
   - name: random
-    start_values: FUNC_RANDOM(10,[1,100])
-    target_values: FUNC_RANDOM(10,[1,100])
+    start_values:
+      each_chain: FUNC_RANDOM(10,[1,100], scope.id)
+    target_values:
+      each_chain: FUNC_RANDOM(10,[1,100], scope.id)
 
 chains_per_condition: 2   # Number of chains per condition
 generations_per_chain: 3  # Number of generation per chain

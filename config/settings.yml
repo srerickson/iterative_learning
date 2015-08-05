@@ -1,5 +1,6 @@
 environment: production # <-- use this to set the environment
 secret: CHANGME
+alert_email: sr.erickson@gmail.com
 
 # Environment-specific settings
 
