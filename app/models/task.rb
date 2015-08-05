@@ -104,12 +104,15 @@ class Task < ActiveRecord::Base
   end
 
   def mturk_disableHit
-    if mturk_hit_id
-      requester(experiment.mturk_sandbox).disableHIT({HITId: mturk_hit_id})
-      self.mturk_hit_id = nil
+    if mturk_hit_id and requester(experiment.mturk_sandbox).disableHIT({HITId: mturk_hit_id})
+      update_attribute(:mturk_hit_id, nil)
     end
   rescue Amazon::WebServices::Util::ValidationException => e
-    throw e unless e.message == "AWS.MechanicalTurk.HITDoesNotExist"
+    if e.message == "AWS.MechanicalTurk.HITDoesNotExist"
+      update_attribute(:mturk_hit_id, nil)
+    else
+      throw e
+    end
   end
 
 end
