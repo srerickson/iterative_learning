@@ -70,4 +70,26 @@ module IterativeLearning
     end
   end
 
+
+  def self.send_error_email(msg)
+    if ENV["ALERT_EMAIL"].present?
+      options = { :address              => "smtp.gmail.com",
+                  :port                 => 587,
+                  :user_name            => ENV['SMTP_USERNAME'],
+                  :password             => ENV['SMTP_PASSWORD'],
+                  :authentication       => 'plain',
+                  :enable_starttls_auto => true  }
+      Mail.defaults do
+        delivery_method :smtp, options
+      end
+      Mail.deliver do
+        to ENV["ALERT_EMAIL"]
+        from ENV['SMTP_USERNAME']
+        subject "Iterative Learning Application Error"
+        body "host: #{ENV['BASE_URL']}\nerror: #{msg}"
+      end
+    end
+  rescue SandardError => e
+  end
+
 end

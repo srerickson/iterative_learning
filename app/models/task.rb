@@ -20,6 +20,9 @@ class Task < ActiveRecord::Base
     clear # response values, disableHIT
     # build HIT if mturk
     if experiment.is_mturk
+      unless mturk_hit_id.nil?
+        throw "trying to createHIT when one appears to be in place!"
+      end
       begin
         result = createHIT(
           self.url,

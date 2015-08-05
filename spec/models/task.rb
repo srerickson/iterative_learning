@@ -76,11 +76,16 @@ describe "Task" do
       @task = @experiment.conditions.first.chains.first.generations.first.tasks.first
     end
 
-    describe "mturk_disableHit" do
+    describe "#mturk_disableHit" do
       it "should set mturk_hit_id to nil" do
         expect(@task.mturk_hit_id).to_not be nil
         @task.mturk_disableHit
         expect(@task.reload.mturk_hit_id).to be nil
+      end
+      
+      it "should call disableHIT with mturk_hit_id" do
+        expect(@task.requester).to receive(:disableHIT).with({HITId: @task.mturk_hit_id})
+        @task.mturk_disableHit
       end
     end
 

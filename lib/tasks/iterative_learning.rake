@@ -79,7 +79,7 @@ namespace :il do
     desc "Test Mturk API Calls"
     task :test => :environment do
       @mturk = Amazon::WebServices::MechanicalTurkRequester.new
-      puts "I have $#{@mturk.availableFunds} in Sandbox"
+      puts "searchHITs shows #{@mturk.searchHITs({PageSize: 100})[:TotalNumResults]} Hits"
     end
 
     desc "Disables all sandbox HITs (100 at a time)"
