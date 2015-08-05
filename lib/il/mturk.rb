@@ -6,9 +6,9 @@ module IterativeLearning
 
     def requester(sandbox = true)
       if sandbox
-        Amazon::WebServices::MechanicalTurkRequester.new :Host => :Sandbox
+        @sandbox ||= Amazon::WebServices::MechanicalTurkRequester.new :Host => :Sandbox
       else
-        Amazon::WebServices::MechanicalTurkRequester.new :Host => :Production
+        @production ||= Amazon::WebServices::MechanicalTurkRequester.new :Host => :Production
       end
     end
 

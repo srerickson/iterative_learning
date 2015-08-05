@@ -12,27 +12,50 @@ class Task < ActiveRecord::Base
   include IterativeLearning::MTurk
   before_destroy :mturk_disableHit
 
+  # - setup start values
+  # - overwrite any response data!
+  # - setup mturk if necessary
   def prepare
     self.start_values = generation.start_values
+    self.response_values = nil
+    self.demographics = {}
     # build HIT if mturk
     if experiment.is_mturk
-      result = createHIT(
-        self.url,
-        experiment.mturk_title,
-        experiment.mturk_description,
-        experiment.mturk_keywords,
-        experiment.mturk_award, 
-        experiment.mturk_duration,
-        experiment.mturk_lifetime,
-        experiment.mturk_sandbox
-      )
-      self.mturk_hit_id = result[:HITId]
-    end    
-    self.save!
+      begin
+        result = createHIT(
+          self.url,
+          experiment.mturk_title,
+          experiment.mturk_description,
+          experiment.mturk_keywords,
+          experiment.mturk_award, 
+          experiment.mturk_duration,
+          experiment.mturk_lifetime,
+          experiment.mturk_sandbox
+        )
+        if result
+          self.mturk_hit_id = result[:HITId]
+        else
+          throw "failed to createHIT for task: #{id}"
+        end
+      rescue Amazon::WebServices::Util::ValidationException => e
+        throw e unless e.message == "AWS.MechanicalTurk.HITAlreadyExists"
+      end
+    end # if experiment.is_mturk
+    save!
   end
 
+  # send update event up the experiment hierarchy
   def update_experiment
     generation.update_experiment(self)
+  end
+
+  # clear any task results, prepare 
+  # resets all future generations
+  def reset(propagate=true)
+    self.prepare
+    if (n = generation.next_gen) and propagate
+      n.reset
+    end
   end
 
   def complete?
@@ -73,11 +96,10 @@ class Task < ActiveRecord::Base
 
   def mturk_disableHit
     if mturk_hit_id
-      begin
-        requester(experiment.mturk_sandbox).disableHIT({HITId: mturk_hit_id})
-      rescue ::Amazon::WebServices::Util::ValidationException => e
-      end
+      requester(experiment.mturk_sandbox).disableHIT({HITId: mturk_hit_id})
     end
+  rescue Amazon::WebServices::Util::ValidationException => e
+    throw e unless e.message == "AWS.MechanicalTurk.HITDoesNotExist"
   end
 
 

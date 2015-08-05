@@ -20,6 +20,6 @@ conditions:
       each_chain: FUNC_RANDOM(10,[1,10], scope.id)
 
 chains_per_condition: 2
-generations_per_chain: 2
+generations_per_chain: 3
 tasks_per_generation: 3
 is_mturk: false
