@@ -70,7 +70,7 @@ namespace :il do
     STDOUT.flush
     i = STDIN.gets.strip
     if i =~ /[Yy].*/
-      Task.find(args[:task_id]).reset
+      Task.find(args[:task_id]).reset!
     end
   end
 
