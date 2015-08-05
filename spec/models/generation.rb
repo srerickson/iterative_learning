@@ -38,29 +38,21 @@ describe "Generation" do
   end
 
 
-  describe "#reset" do
+  describe "#_clear!" do
 
-    it "should reset all tasks in the generation and call reset on the next generation" do 
-    
-      expect(@gen_1.next_gen).to eq(@gen_2)
-      expect(@gen_1.next_gen.next_gen).to eq(@gen_3)
-
-      @gen_1.tasks.each do |t|
-        t.response_values = sample_positive(10)
-        t.save
-        t.update_experiment
-      end
-      expect(@gen_1.complete?).to be(true)
-      expect(@gen_2.active?).to be(true)
-      expect(@gen_1.next_gen).to receive(:reset).and_call_original
-      expect(@gen_1.next_gen.next_gen).to receive(:reset)
-      @gen_1.reset
-      @gen_1.tasks.each do |t|
-        expect(t.response_values).to be_nil
-      end
-      expect(@gen_1.reload.complete?).to be(false)
-      expect(@gen_2.reload.active?).to be(false)
+    it "should clear! all tasks in the generation and call _clear! on the next generation" do
+      expect(@gen_1.next_gen).to receive(:_clear!).and_call_original
+      expect(@gen_1.next_gen.next_gen).to receive(:_clear!)
+      @gen_1.tasks.each{ |t| expect(t).to receive(:clear!) }
+      @gen_1._clear!
     end
+
+    it "should reset start_values" do
+      expect(@gen_1.start_values).not_to be_empty
+      @gen_1._clear!
+      expect(@gen_1.start_values).to be_empty
+    end
+
 
   end
 

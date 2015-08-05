@@ -34,24 +34,36 @@ describe "Task" do
 
     end
 
-    describe "#reset" do 
+    describe "#clear!" do
       it "deletes response values and demographics" do
         @task.response_values = sample_positive(10)
         @task.demographics = {gender: "Male"}
-        @task.reset
-        expect(@task.response_values).to be(nil)
-        expect(@task.demographics).to be_empty
-      end
+        @task.save!
 
-      it "calls reset on next generation (by default)" do
-        gen2 = @task.generation.next_gen
-        @task.response_values = sample_positive(10)
-        @task.update_experiment
-        expect(gen2).to receive(:reset)
-        @task.reset
+        expect(@task.complete?).to be(true)
+        @task.clear!
+        expect(@task.complete?).to be(false)
       end
-
     end
+
+    describe "#reset!" do
+      it "makes the task's current generation active" do
+        expect(@task.generation.active?).to be(true)
+        # complete all the tasks in the generation
+        @task.generation.tasks.each do |t|
+          t.response_values = sample_positive(10)
+          t.save!
+          t.update_experiment
+        end
+        # task's generation should now be complete
+        expect(@task.reload.generation.active?).to be(false)
+        expect(@task.generation.next_gen.active?).to be(true)
+        @task.reset!
+        expect(@task.reload.generation.active?).to be(true)
+        expect(@task.generation.next_gen.active?).to be(false)
+      end
+    end
+
 
   end
 
@@ -64,12 +76,17 @@ describe "Task" do
       @task = @experiment.conditions.first.chains.first.generations.first.tasks.first
     end
 
-    it "should createHit during prepare" do
+    it "should disableHIT during clear" do
+      expect(@task.requester).to receive(:disableHIT)
+      @task.clear
+    end
+
+    it "should createHIT during prepare" do
       expect(@task.requester).to receive(:createHIT).and_call_original
       @task.prepare
     end
 
-    it "should disable the HIT before destroy" do 
+    it "should disableHIT before destroy" do
       hit = @task.mturk_getHit
       expect(hit).to_not be(nil)
       expect(@task.requester).to receive(:disableHIT)
