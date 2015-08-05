@@ -103,7 +103,11 @@ class Task < ActiveRecord::Base
   end
 
   def mturk_getHit
-    requester(experiment.mturk_sandbox).getHIT({HITId: mturk_hit_id})
+    if mturk_hit_id
+      requester(experiment.mturk_sandbox).getHIT({HITId: mturk_hit_id})
+    else
+      nil
+    end
   end
 
   def mturk_disableHit
