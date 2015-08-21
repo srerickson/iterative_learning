@@ -1,5 +1,5 @@
 description: |
-  This is an example experiment.
+  This is an example MTrurk experiment.
 
 # condition definitions (multiple)
 conditions:
@@ -15,9 +15,15 @@ conditions:
     start_values: FUNC_NONLINEAR(10,[1,100])
     target_values: FUNC_NONLINEAR(10,[1,100])
 
+  # Random chains are deterministic.
+  # The seed for the pseudo-random number generator is
+  # specified in the third term of the function definition.
+  # Here each chain will have a unique random funciton.
   - name: random
-    start_values: FUNC_RANDOM(10,[1,100])
-    target_values: FUNC_RANDOM(10,[1,100])
+    start_values:
+      each_chain: FUNC_RANDOM(10,[1,100], scope.id)
+    target_values:
+      each_chain: FUNC_RANDOM(10,[1,100], scope.id)
 
 chains_per_condition: 2   # Number of chains per condition
 generations_per_chain: 3  # Number of generation per chain
@@ -37,17 +43,17 @@ mturk_duration: 3600 # one hour for HIT to to be completed
 mturk_lifetime: 31536000 # one year until HIT expires
 mturk_qualifications: "" # not used
 
-# Options for experiment interface
-#
+# Other Options
 config:
 
   # send notifications when tasks are completed?
   task_notification: sr.erickson@gmail.com
 
   ### Frontend Configs ###
+  sequence: [intro,consent,_demographics,_training,testing_intro,_testing]
 
-  # feedback delay in millisecods
-  feedback_delay: 10
+  # feedback delay in millisecods (training only)
+  feedback_delay: 500
 
   # mandatory timer (testing only)
   minimum_task_time: 3000
@@ -62,22 +68,18 @@ config:
       enum: [Female,Male]
       description: Your Gender
 
-  intro_help_text: |
-    <p>
-      <b> Instructions go here</b>
-    </p>
+  # Page Content (define pages in [sequence] config)
+  pages:
+    intro:
+      body: <b> Instructions go here</b>
+    consent:
+      body: <b> Do you consent? </b>
+      next_button: I Consent
+    testing_intro:
+      body: You have completed the Training Phase. You will now move on to the Testing Phase.
 
-  next_button_help_text: |
-    Adjust the vertical slider and click Next
-
-  training_correct_text: |
-    <b>Correct!</b>
-
-  training_wrong_text: |
-    <b>Incorrect.</b><br/>Adjust the slider to the correct value (indicated by the yellow bar) and click Next
-  
-  testing_help_text: |
-    You have completed the Training Phase. You will now move on to the Testing Phase.
-  
-  final_help_text: |
-    Thank you for taking part.
+  # UI Help texts (defaults shown)
+  # next_button_help_text: Adjust the vertical slider and click Next
+  # training_correct_text: <b>Correct!</b>
+  # training_wrong_text: <b>Incorrect.</b><br/>Adjust the slider to the correct value (indicated by the yellow bar) and click Next
+  # final_help_text: Thank you for taking part.

@@ -25,7 +25,6 @@ angular.module('iterativeLearningApp', ['ui.router','ngSanitize','schemaForm'])
                 err
             )
 
-
 # Task States
 .config ($stateProvider) ->
   $stateProvider.state "task.demographics",
@@ -33,17 +32,11 @@ angular.module('iterativeLearningApp', ['ui.router','ngSanitize','schemaForm'])
     controller: "TaskDemographicsCtrl"
     templateUrl: "views/task/demographics.html"
 
-
 .config ($stateProvider) ->
   $stateProvider.state "task.training",
     url: "/training"
     controller: "TaskTrainingCtrl"
     templateUrl: "views/task/training.html"
-
-.config ($stateProvider) ->
-  $stateProvider.state "task.testing_intro",
-    url: "/testing_intro"
-    templateUrl: "views/task/testing_intro.html"
 
 .config ($stateProvider) ->
   $stateProvider.state "task.testing",
@@ -57,6 +50,11 @@ angular.module('iterativeLearningApp', ['ui.router','ngSanitize','schemaForm'])
     controller: "TaskFinalCtrl"
     templateUrl: "views/task/final.html"
 
+.config ($stateProvider) ->
+  $stateProvider.state "task.page",
+    url: "/page?name"
+    controller: "TaskPageCtrl"
+    templateUrl: "views/task/page.html"
 
   # Experiment Dashboard 
   $stateProvider.state "experiment",

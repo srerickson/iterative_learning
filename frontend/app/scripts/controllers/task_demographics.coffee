@@ -6,6 +6,7 @@ angular
     $scope.schema =
       type: "object"
       properties: $scope.$parent.config.demographics
+      required: Object.keys($scope.$parent.config.demographics)
 
     $scope.form = ["*",
       {
@@ -20,7 +21,7 @@ angular
 
       #T hen we check if the form is valid
       if (form.$valid)
-        $state.go('task.training')
+        $scope.next_in_sequence()
         # ... do whatever you need to do with your data.
 
 

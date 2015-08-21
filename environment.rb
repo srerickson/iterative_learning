@@ -1,6 +1,6 @@
 $:.unshift("./app","./app/api","./app/serializers","./lib")
 
-VERSION = '0.2'
+VERSION = '0.3'
 
 require 'rubygems'
 require 'bundler/setup'

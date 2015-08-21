@@ -3,17 +3,15 @@ angular
   .module('iterativeLearningApp') 
   .controller 'TaskTrainingCtrl', ($scope, $state, $timeout) ->
 
-    $scope.$parent.state = 
+    angular.merge($scope.$parent.state,
       name: "training"
       step: 0
       show_feedback: false
       transitioning: false
       guess: null
       task_timer: false # no task timer during training
-    
+    )
 
-    # feedback delay in milliseconds
-    delay = $scope.config.feedback_delay || 1500
     $scope.feedback_message = $scope.config.next_button_help_text
 
     $scope.next = ()-> 
@@ -34,8 +32,9 @@ angular
               $scope.state.transitioning = false
               $scope.feedback_message = $scope.config.next_button_help_text
             else
-              $state.go("task.testing_intro")
-          , delay)
+              # $state.go("task.testing_intro")
+              $scope.next_in_sequence()
+          , $scope.config.feedback_delay)
           return true
         else
           $scope.feedback_message = $scope.config.training_wrong_text
