@@ -1,5 +1,4 @@
-description: |
-  This is an example MTrurk experiment.
+description: Example MTurk Experiment
 
 # condition definitions (multiple)
 conditions:
