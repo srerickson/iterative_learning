@@ -22,8 +22,6 @@ conditions:
 chains_per_condition: 1
 generations_per_chain: 2
 tasks_per_generation: 2
-percent_test_for_training: 50 # percent of values to use for training (chosen randomly)
-
 
 # # Mechanical Turk Settings
 # # - ignored if: is_mturk = false 
@@ -35,27 +33,3 @@ mturk_keywords: iterative learning
 mturk_award: 0.03   # three cent reward
 mturk_duration: 3600 # one hour for HIT to to be completed
 mturk_lifetime: 31536000 # one year until HIT expires
-
-# Options for experiment interface
-#
-config:
-  feedback_delay: 10 # feedback delay in millisecods
-  intro_help_text: |
-    <p>
-      <b> Instructions go here</b>
-    </p>
-
-  next_button_help_text: |
-    Adjust the vertical slider and click Next
-
-  training_correct_text: |
-    <b>Correct!</b>
-
-  training_wrong_text: |
-    <b>Incorrect.</b><br/>Adjust the slider to the correct value (indicated by the yellow bar) and click Next
-  
-  testing_help_text: |
-    You have completed the Training Phase. You will now move on to the Testing Phase.
-  
-  final_help_text: |
-    Thank you for taking part. 
