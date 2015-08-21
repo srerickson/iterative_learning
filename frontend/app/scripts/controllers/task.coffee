@@ -4,12 +4,24 @@
 angular.module('iterativeLearningApp')
   .controller 'TaskCtrl', ($scope, $stateParams, $state, $http, $timeout, ilHost, task) ->
 
-    # UI help texts & Other Frontend Configs
-    $scope.config = task.config || {}
+    # UI defaults
+    default_config =
+      sequence: ['_training','_testing']
+      minimum_task_time: 0
+      feedback_delay: 500
+      pages: {}
+      demographics: {}
+      next_button_help_text: "Adjust the vertical slider and click Next"
+      training_correct_text: "<b>Correct!</b>"
+      training_wrong_text:   "<b>Incorrect.</b><br/>Adjust the slider to the correct value (indicated by the yellow bar) and click Next"
+      final_help_text:       "Thank you for taking part."
+
+    $scope.config = angular.merge(default_config, task.config)
 
     # task state values
     $scope.state =
       name: null            # testing or training
+      sequence_step: -1     # index of current position in sequence
       step: 0               # value index
       guess: null           # the value of the response for current step
       show_feedback: false  # whether feedback bar is showing
@@ -77,7 +89,7 @@ angular.module('iterativeLearningApp')
       $scope.state.task_timer = true
       $timeout( ()->
         $scope.state.task_timer = false
-      ,$scope.config.minimum_task_time || 0)
+      ,$scope.config.minimum_task_time)
 
     # adds a response for the current step
     $scope.save_response = ()->
@@ -124,17 +136,22 @@ angular.module('iterativeLearningApp')
           ,(err)->
             console.log err
 
-    $scope.next = ()->
-      try 
-        if Object.keys($scope.config.demographics).length > 1
-          $state.go('task.demographics')
-        else
-          $state.go('task.training')
-      catch
-        $state.go('task.training')
+
+    $scope.next_in_sequence = ()->
+      $scope.state.sequence_step += 1
+      step = $scope.config.sequence[$scope.state.sequence_step]
+      # console.log "going to: #{step} (#{$scope.state.sequence_step})"
+      if /^_.*$/.test(step)
+        $state.go('task.'+ step.slice(1) )
+      else if step != undefined
+        $state.go('task.page',{name: step})
+      else
+        $state.go('task.final')
+
 
     # Initialize
     #  - build response structure
+    #  - go to initial state
     if $scope.task_is_doable()
       for phase in ['testing', 'training']
         for i in task._start_values[phase]
@@ -143,6 +160,4 @@ angular.module('iterativeLearningApp')
             y: null
             time: null
           })
-
-
-
+    $scope.next_in_sequence()

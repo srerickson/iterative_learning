@@ -3,14 +3,15 @@ angular
   .module('iterativeLearningApp')
   .controller 'TaskTestingCtrl', ($scope, $state) ->
 
-    $scope.$parent.state = 
+    angular.merge($scope.$parent.state,
       name: "testing"
       step: 0
       show_feedback: false
       transitioning: false
       guess: null
       task_timer: false
-    
+    )
+
     $scope.start_task_timer()
 
 
@@ -23,4 +24,4 @@ angular
         $scope.state.step += 1 # continue with testing
         $scope.start_task_timer()
       else
-        $state.go("task.final")
+        $scope.next_in_sequence()

@@ -50,11 +50,15 @@ describe('iterative learning', function() {
               // Intro Instructions
               browser.get(task_url)
               waitForUrlToChangeTo(/task/)
-              element(by.css('[ng-click="next()"]')).click()
+              element(by.css('a.btn.btn-primary')).click()
+
+              //Consent
+              waitForUrlToChangeTo(/page\?name=consent/)
+              element(by.css('a.btn.btn-primary')).click()
 
               //demographics
               waitForUrlToChangeTo(/demographics/)
-              element(by.css('#age')).sendKeys(1)
+              element(by.css('#age')).sendKeys(10)
               element(by.css('option[value="Male"]')).click()
               element(by.css('input[type="submit"]')).click()
 
@@ -86,8 +90,8 @@ describe('iterative learning', function() {
               }
 
               // Training Intro
-              waitForUrlToChangeTo(/testing_intro/)
-              element(by.css('[ui-sref="task.testing"]')).click()
+              waitForUrlToChangeTo(/page\?name=testing_intro/)
+              element(by.css('a.btn.btn-primary')).click()
 
               // Testing Phase
               waitForUrlToChangeTo(/testing/)
