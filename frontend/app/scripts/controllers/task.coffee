@@ -8,7 +8,7 @@ angular.module('iterativeLearningApp')
     default_config =
       sequence: ['_training','_testing']
       minimum_task_time: 0
-      feedback_delay: 500
+      feedback_delay: 1500
       pages: {}
       demographics: {}
       next_button_help_text: "Adjust the vertical slider and click Next"
