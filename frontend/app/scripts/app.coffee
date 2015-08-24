@@ -14,7 +14,7 @@ angular.module('iterativeLearningApp', ['ui.router','ngSanitize','schemaForm'])
   $stateProvider.state "task",
     url: "/task?key&assignmentId&hitId&workerId&turkSubmitTo"
     controller: "TaskCtrl"
-    templateUrl: "views/task/intro.html"
+    templateUrl: "views/task/task.html"
     resolve: 
         task: ($http, $stateParams, ilHost) ->
           $http.get(ilHost+"/task?key=#{$stateParams.key}&workerId=#{$stateParams.workerId}")
