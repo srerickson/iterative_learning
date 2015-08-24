@@ -50,7 +50,7 @@ config:
   task_notification: sr.erickson@gmail.com
 
   ### Frontend Configs ###
-  sequence: [intro,consent,_demographics,_training,testing_intro,_testing]
+  sequence: [intro,consent,demographics,training,testing_intro,testing]
 
   # feedback delay in millisecods (training only)
   feedback_delay: 500

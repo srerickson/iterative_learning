@@ -8,7 +8,7 @@ class MigrateToPagesConfig < ActiveRecord::Migration
         intro: {body: intro_help_text},
         testing_intro: {body: testing_intro}
       }
-      e.config['sequence'] = ['intro','_training','testing_intro','_testing']
+      e.config['sequence'] = ['intro','training','testing_intro','testing']
       e.save
     end
   end
