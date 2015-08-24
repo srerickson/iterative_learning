@@ -40,7 +40,7 @@ mturk_qualifications: "" # not used
 # Options for experiment interface
 #
 config:
-  sequence: [intro,_training,testing_intro,_training]
+  sequence: [intro,training,testing_intro,training]
   pages:
     intro:
       body: |
