@@ -3,7 +3,7 @@
     <p>
       <div ng-bind-html="page.body"></div>
     </p>
-    <p>
+    <p ng-show="!mturk_preview()">
       <a class="btn btn-primary" ng-click="next_in_sequence()">
         {{page.next_button || "Next >"}}
       </a>
