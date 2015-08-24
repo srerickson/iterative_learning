@@ -3,6 +3,8 @@ angular
   .module('iterativeLearningApp')
   .controller 'TaskDemographicsCtrl', ($scope, $state,ilHost) ->
 
+    $scope.$parent.state.name = 'demographics'
+
     $scope.schema =
       type: "object"
       properties: $scope.$parent.config.demographics

@@ -6,7 +6,7 @@ angular.module('iterativeLearningApp')
 
     # UI defaults
     default_config =
-      sequence: ['_training','_testing']
+      sequence: ['training','testing']
       minimum_task_time: 0
       feedback_delay: 1500
       pages: {}
@@ -20,21 +20,18 @@ angular.module('iterativeLearningApp')
 
     # task state values
     $scope.state =
-      name: null            # testing or training
-      sequence_step: -1     # index of current position in sequence
-      step: 0               # value index
+      name: null            # current squence name: testing, training, or page name
+      step: 0               # index of value in testing/training sets
       guess: null           # the value of the response for current step
       show_feedback: false  # whether feedback bar is showing
       transitioning: false  # transitioning b/w steps or states?
       task_timer: false     # whether the minimum task time has elapsed
-
 
     # results go here
     responses = {
       training: []
       testing: []
     }
-
     $scope.demographics = {}
 
     # stuff for mturk form
@@ -138,13 +135,13 @@ angular.module('iterativeLearningApp')
 
 
     $scope.next_in_sequence = ()->
-      $scope.state.sequence_step += 1
-      step = $scope.config.sequence[$scope.state.sequence_step]
-      # console.log "going to: #{step} (#{$scope.state.sequence_step})"
-      if /^_.*$/.test(step)
-        $state.go('task.'+ step.slice(1) )
-      else if step != undefined
-        $state.go('task.page',{name: step})
+      idx = $scope.config.sequence.indexOf($scope.state.name)
+      # idx is -1 if state.name is not in sequence, next_page will be first page
+      next_page = $scope.config.sequence[idx + 1]
+      if /^(testing|training|demographics)$/.test(next_page)
+        $state.go('task.'+ next_page )
+      else if next_page != undefined
+        $state.go('task.page',{name: next_page})
       else
         $state.go('task.final')
 
@@ -160,4 +157,4 @@ angular.module('iterativeLearningApp')
             y: null
             time: null
           })
-    $scope.next_in_sequence()
+      $scope.next_in_sequence()
